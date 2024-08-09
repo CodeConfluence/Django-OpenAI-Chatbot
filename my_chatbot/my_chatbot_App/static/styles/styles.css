@@ -165,7 +165,7 @@ body.register-page::before {
 
 /* Login page specific styles */
 body.login-page {
-    background: linear-gradient(-45deg, #3c6ccc 50%, #CC9C3C 50%);
+    background: linear-gradient(180deg,#444454 50%, #3c6ccc 50%);
 }
 
 body.login-page::before {
