@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +10,24 @@
     <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
 </head>
 <body class="login-page">
+    {% block title %}Login{% endblock %}
+
+    {% block body_class %}login-page{% endblock %}
+
+    {% block content %}
     <div class="container">
         <h1>Login</h1>
         <form method="POST" action="{% url 'login' %}" class="form-box">
             {% csrf_token %}
+            
+            {% if messages %}
+            <div class="error-message">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <div class="input-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required placeholder="Username">
@@ -22,9 +37,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required placeholder="Password">
             </div>
-            {% if error %}
-            <p class="error">{{ error }}</p>
-            {% endif %}
+
             <div class="input-group checkbox">
                 <input type="checkbox" id="remember" name="remember">
                 <label for="remember">Remember me</label>
@@ -32,7 +45,8 @@
 
             <button type="submit" class="btn">Login</button>
         </form>
-        <a href="/password-reset/" class="link">Forgot Password?</a>
+        <a href="{% url 'password_reset' %}" class="link">Forgot Password?</a>
     </div>
+    {% endblock %}
 </body>
 </html>

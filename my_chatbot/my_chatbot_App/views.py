@@ -1,32 +1,58 @@
-from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetView
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LoginView
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import PasswordResetView, LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate, login
 
 def register_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'accounts/registration/register.html', {'form': form})
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        if password != password2:
+            return render(request, 'accounts/registration/register.html')
+
+        if User.objects.filter(username=username).exists():
+            return render(request, 'accounts/registration/register.html')
+
+        if User.objects.filter(email=email).exists():
+            return render(request, 'accounts/registration/register.html')
+
+        try:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            login(request, user)
+            send_mail(
+                'Welcome to SocialBrain.ai',
+                'Thank you for registering with SocialBrain.ai!',
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+                fail_silently=False,
+            )
+            return redirect('home')
+        except ValidationError as e:
+            return render(request, 'accounts/registration/register.html')
+
+    return render(request, 'accounts/registration/register.html')
 
 class CustomLoginView(LoginView):
     template_name = 'accounts/login.html'
 
-    def get_success_url(self):
-        return reverse_lazy('home')
-    
-    def form_invalid(self, form):
-        context = self.get_context_data(form=form)
-        context['error'] = 'Invalid username or password.'
-        return self.render_to_response(context)
+    def post(self, request, *args, **kwargs):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            return render(request, self.template_name)
 
 class CustomLogoutView(LogoutView):
     template_name = 'accounts/logout.html'
@@ -41,18 +67,18 @@ class CustomPasswordResetView(PasswordResetView):
 def home_view(request):
     return render(request, 'chatbotApp/home.html')
 
+@login_required
 def profile_view(request):
     return render(request, 'accounts/profile.html')
-
-# account_settings
 
 @login_required
 def account_settings_view(request):
     return render(request, 'accounts/account_settings.html')
 
+@login_required
 def account_delete_view(request):
     if request.method == 'POST':
         user = request.user
         user.delete()
         return redirect('home')
-    return render(request, 'account_delete_confirmation.html')
+    return render(request, 'accounts/account_delete_confirmation.html')

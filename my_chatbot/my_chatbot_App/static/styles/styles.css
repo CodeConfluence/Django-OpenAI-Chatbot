@@ -254,7 +254,7 @@ body.register-page::before {
 
 /* Login page specific styles */
 body.login-page {
-  background: linear-gradient(-45deg, var(--primary-blue-0) 50%, #cc9c3c 50%);
+  background: linear-gradient(180deg, var(--primary-blue-0) 50%, #444454 50%);
 }
 
 body.login-page::before {
@@ -358,4 +358,33 @@ body.login-page::before {
 
 .btn-delete:hover {
   background-color: #c82333;
+}
+
+.error-message {
+  color: #dc3545;
+  text-align: center;
+  font-weight: bold;
+  margin: 15px 0;
+  padding: 10px;
+  border: 1px solid #dc3545;
+  border-radius: 5px;
+  background-color: #f8d7da;
+}
+
+.form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-box .input-group:last-of-type {
+  margin-bottom: 15px;
+}
+
+.form-box .btn {
+  margin-top: 15px;
+}
+
+.login-page .form-box .checkbox {
+  margin-top: 15px;
 }
