@@ -1,7 +1,11 @@
+from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
+from django.urls import reverse_lazy
 
 def register_view(request):
     if request.method == 'POST':
@@ -12,6 +16,21 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'accounts/registration/register.html', {'form': form})
+
+class CustomLoginView(LoginView):
+    template_name = 'accounts/login.html'
+
+    def get_success_url(self):
+        return reverse_lazy('home')
+    
+    def form_invalid(self, form):
+        context = self.get_context_data(form=form)
+        context['error'] = 'Invalid username or password.'
+        return self.render_to_response(context)
+
+class CustomLogoutView(LogoutView):
+    template_name = 'accounts/logout.html'
+    next_page = reverse_lazy('login')
     
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'registration/password_reset_form.html'
