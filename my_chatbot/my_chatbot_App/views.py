@@ -1,62 +1,29 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
-from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordResetView
-from .forms import RegisterForm
-
-# Login, Registration, Reset Password
+from django.contrib.auth.forms import UserCreationForm
 
 def register_view(request):
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get("email")
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = User.objects.create_user(email=email,username=username, 
-                                            password=password)
-            login(request, user)
-            return redirect('home')
+            form.save()
+            return redirect('login')
     else:
-        form = RegisterForm()
-    context = {'form':form}
-    return render(request, 'accounts/registration/register.html', context)
-
-
-
-def login_view(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            next_url = request.POST.get('next') or request.GET.get(
-            'next') or 'home'
-            return redirect(next_url)
-        else:
-            error_message = "Invalid Credentials!"
-            context = {'error':error_message}
-            return render(request, 'accounts/login.html', context)
-    else:
-        return render(request, 'accounts/login.html')
-
-@login_required
-def logout_view(request):
-    if request.method == "POST":
-        logout(request)
-        return redirect('login')
-    else:
-        return redirect('home')
+        form = UserCreationForm()
+    return render(request, 'accounts/registration/register.html', {'form': form})
     
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'registration/password_reset_form.html'
     email_template_name = 'registration/password_reset_email.html'
     subject_template_name = 'registration/password_reset_subject.txt'
     success_url = '/password_reset/done/'
+
+def home_view(request):
+    return render(request, 'chatbotApp/home.html')
+
+def profile_view(request):
+    return render(request, 'accounts/profile.html')
 
 # account_settings
 

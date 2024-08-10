@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'images/Icon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body class="profile-page">
+    <div class="main-content">
+        <div class="profile-section">
+            <h2>Profile</h2>
+            <div class="input-group">
+                <label for="fullname">Name</label>
+                <div class="input-wrapper">
+                    <input type="text" id="fullname" name="fullname" placeholder="Name" value="">
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="nickname">Username</label>
+                <div class="input-wrapper">
+                    <input type="text" id="nickname" name="nickname" placeholder="Username" value="">
+                </div>
+            </div>
+            <button class="btn">Update Profile</button>
+        </div>
+        <div class="profile-section">
+            <h2>Custom Agents</h2>
+            <p>Manage your custom AI agents here. You can create, edit, and delete agents tailored to your specific needs.</p>
+            <ul class="agent-list">
+                <li class="agent-item">
+                    <span>Marketing Assistant</span>
+                    <div class="agent-actions">
+                        <button class="btn">Edit</button>
+                        <button class="btn btn-delete">Delete</button>
+                    </div>
+                </li>
+                <li class="agent-item">
+                    <span>Code Reviewer</span>
+                    <div class="agent-actions">
+                        <button class="btn">Edit</button>
+                        <button class="btn btn-delete">Delete</button>
+                    </div>
+                </li>
+            </ul>
+            <button class="btn" style="margin-top: 20px;">Create New Agent</button>
+        </div>
+    </div>
+</body>
+</html>
