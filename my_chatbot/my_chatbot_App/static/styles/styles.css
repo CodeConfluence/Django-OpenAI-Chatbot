@@ -1,275 +1,361 @@
-@font-face {
-    font-family: 'Kollektif';
-    src: url('/static/fonts/Kollektif-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
+/* Web-page wide styling variables */
+html {
+  /* generic variables */
+  --background-color-light: #f2f7f9;
+
+  /* typography palette */
+  --primary-text-color-0: #0a0f11;
+  --primary-text-color-100: #090e0f;
+  --primary-text-color-200: #080c0e;
+  --primary-text-color-300: #070b0c;
+  --primary-text-color-400: #06090a;
+  --primary-text-color-500: #050809;
+  --primary-text-color-600: #040607;
+  --primary-text-color-700: #030405;
+  --primary-text-color-800: #020303;
+  --primary-text-color-900: #010102;
+
+  --secondary-text-color-0: #eff4f6;
+  --secondary-text-color-100: #d7dcdd;
+  --secondary-text-color-200: #bfc3c5;
+  --secondary-text-color-300: #a7abac;
+  --secondary-text-color-400: #8f9294;
+  --secondary-text-color-500: #787a7b;
+  --secondary-text-color-600: #606262;
+  --secondary-text-color-700: #48494a;
+  --secondary-text-color-800: #303131;
+  --secondary-text-color-900: #181819;
+
+  /* primary color palette */
+  --primary-blue-0: #3c6ccc;
+  --primary-blue-100: #3661b8;
+  --primary-blue-200: #3056a3;
+  --primary-blue-300: #2a4c8f;
+  --primary-blue-400: #24417a;
+  --primary-blue-500: #1e3666;
+  --primary-blue-600: #182b52;
+  --primary-blue-700: #12203d;
+  --primary-blue-800: #0c1629;
+  --primary-blue-900: #060b14;
+
+  /* secondary color palette */
+  --secondary-blue-0: #7bbfeb;
+  --secondary-blue-100: #6facd4;
+  --secondary-blue-200: #6299bc;
+  --secondary-blue-300: #5686a5;
+  --secondary-blue-400: #4a738d;
+  --secondary-blue-500: #3e6076;
+  --secondary-blue-600: #314c5e;
+  --secondary-blue-700: #253946;
+  --secondary-blue-800: #19262f;
+  --secondary-blue-900: #0c1317;
+
+  /* accent color palette */
+  --accent-blue-0: #46b1f6;
+  --accent-blue-100: #3f9fdd;
+  --accent-blue-200: #388ec5;
+  --accent-blue-300: #317cac;
+  --accent-blue-400: #2a6a94;
+  --accent-blue-500: #23597b;
+  --accent-blue-600: #1c4762;
+  --accent-blue-700: #15354a;
+  --accent-blue-800: #0e2331;
+  --accent-blue-900: #071219;
+
+  /* misc colors */
+  --primary-white-0: #ffffff;
+  --primary-white-100: #e6e6e6;
+  --primary-white-200: #cccccc;
+  --primary-white-300: #b3b3b3;
+  --primary-white-400: #999999;
+  --primary-white-500: #808080;
+  --primary-white-600: #666666;
+  --primary-white-700: #4c4c4c;
+  --primary-white-800: #333333;
+  --primary-white-900: #191919;
+
+  --primary-black-0: #000000;
+  --primary-black-100: #1a1a1a;
+  --primary-black-200: #333333;
+  --primary-black-300: #4d4d4d;
+  --primary-black-400: #666666;
+  --primary-black-500: #808080;
+  --primary-black-600: #999999;
+  --primary-black-700: #b3b3b3;
+  --primary-black-800: #cccccc;
+  --primary-black-900: #e6e6e6;
 }
 
 @font-face {
-    font-family: 'Kollektif';
-    src: url('/static/fonts/Kollektif-BoldItalic.ttf') format('truetype');
-    font-weight: bold;
-    font-style: italic; 
+  font-family: "Kollektif";
+  src: url("/static/fonts/Kollektif-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Kollektif';
-    src: url('/static/fonts/Kollektif-Italic.ttf') format('truetype');
-    font-weight: normal;
-    font-style: italic;
+  font-family: "Kollektif";
+  src: url("/static/fonts/Kollektif-BoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
 }
 
 @font-face {
-    font-family: 'Kollektif';
-    src: url('/static/fonts/Kollektif.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Kollektif";
+  src: url("/static/fonts/Kollektif-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Kollektif";
+  src: url("/static/fonts/Kollektif.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
-    font-family: 'Kollektif', sans-serif;
+  font-family: "Kollektif", sans-serif;
+  background-color: var(--background-color-light);
 }
 
 header {
-    display: flex;
-    justify-content: space-between; 
+  display: flex;
+  justify-content: space-between;
 }
 
 .navigation {
-    margin-top: 0.5%;
-    margin-right:0.5%
+  margin-top: 0.5%;
+  margin-right: 0.5%;
 }
 
 .register-link {
-    padding: 8px 15px;
-    background-color: #444454;
-    border-radius: 25px; 
-    text-decoration: none;
-    color: white; 
-    transition: background-color 0.3s; 
-    margin-right: 5px;
+  padding: 8px 15px;
+  background-color: var(--secondary-blue-500);
+  border-radius: 25px;
+  text-decoration: none;
+  color: var(--secondary-text-color-0);
+  transition: background-color 0.3s;
+  margin-right: 5px;
 }
 
 .login-link {
-    padding: 8px 15px;
-    background-color: #3c6ccc;
-    border-radius: 25px; 
-    text-decoration: none;
-    color: black; 
-    transition: background-color 0.3s; 
+  padding: 8px 15px;
+  background-color: var(--primary-blue-0);
+  border-radius: 25px;
+  text-decoration: none;
+  color: var(--primary-text-color-0);
+  transition: background-color 0.3s;
 }
 
 .nav-link:hover {
-    background-color: #2C56A9;
+  background-color: var(--secondary-blue-0);
 }
 body.login-page,
 body.register-page {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Kollektif', sans-serif;
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Kollektif", sans-serif;
+  overflow: hidden;
 }
 
 .container {
-    background-color: white;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    z-index: 1;
+  background-color: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  z-index: 1;
 }
 
 h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
+  text-align: center;
+  color: var(--primary-text-color-0);
+  margin-bottom: 30px;
 }
 
 .form-box {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .input-group {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-group label {
-    margin-bottom: 5px;
-    color: #555;
-    font-size: 20px;
+  margin-bottom: 5px;
+  color: #555;
+  font-size: 20px;
 }
 
-body.login-page .input-group input:not([type="checkbox"]),
-body.register-page .input-group input:not([type="checkbox"]) {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 95%; 
+.input-group input:not([type="checkbox"]) {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .checkbox {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 .btn {
-    background-color: #3c6ccc;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: var(--primary-blue-0);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn:hover {
-    background-color: #2C56A9;
+  background-color: var(--secondary-blue-0);
 }
 
 .link {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    color: #3c6ccc;
-    text-decoration: none;
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: var(--primary-blue-0);
+  text-decoration: none;
 }
 
 .link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Register page specific styles */
 body.register-page {
-    background: linear-gradient(135deg, #3c6ccc 50%, #444454 50%);
+  background: linear-gradient(135deg, var(--primary-blue-0) 50%, #444454 50%);
 }
 
 body.register-page::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: inherit;
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  z-index: -1;
 }
 
 /* Login page specific styles */
 body.login-page {
-    background: linear-gradient(180deg,#444454 50%, #3c6ccc 50%);
+  background: linear-gradient(-45deg, var(--primary-blue-0) 50%, #cc9c3c 50%);
 }
 
 body.login-page::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: inherit;
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  z-index: -1;
 }
 
 @media (max-width: 600px) {
-    .container {
-        margin: 20px;
-        padding: 30px;
-    }
+  .container {
+    margin: 20px;
+    padding: 30px;
+  }
 }
 
 /* Profile page specific styles */
 .main-content {
-    flex-grow: 1;
-    padding: 40px;
-    max-width: 800px;
-    margin: 0 auto;
+  flex-grow: 1;
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .profile-section {
-    background-color: white;
-    border-radius: 10px;
-    padding: 30px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--primary-white-0);
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .input-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: black;
+  display: block;
+  margin-bottom: 5px;
+  color: var(--primary-blue-900);
 }
 
 .input-wrapper {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .profile-section .input-group input,
 .profile-section .input-group select,
 .profile-section .input-group textarea {
-    width: 45%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
+  width: 45%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .btn {
-    background-color: #3c6ccc;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: var(--primary-blue-0);
+  color: var(--secondary-text-color-0);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn:hover {
-    background-color: #2C56A9;
+  background-color: var(--primary-blue-200);
 }
 
 .agent-list {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .agent-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 18px;
+  border: 1px solid var(--primary-white-200);
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
 }
 
 .agent-actions {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .btn-delete {
-    background-color: #dc3545;
+  background-color: #dc3545;
 }
 
 .btn-delete:hover {
-    background-color: #c82333;
+  background-color: #c82333;
 }
