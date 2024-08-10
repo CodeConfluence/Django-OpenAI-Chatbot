@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 django = "*"
+sendgrid-django = "*"
+python-decouple = "*"
 
 [dev-packages]
 

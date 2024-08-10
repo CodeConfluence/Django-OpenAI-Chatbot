@@ -22,7 +22,9 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required placeholder="Password">
             </div>
-
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
             <div class="input-group checkbox">
                 <input type="checkbox" id="remember" name="remember">
                 <label for="remember">Remember me</label>
