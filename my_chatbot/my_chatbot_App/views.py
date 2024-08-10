@@ -16,3 +16,6 @@ def register(request):
 
 def home(request):
     return render(request, 'chatbotApp/home.html')
+
+def profile(request):
+    return render(request, 'accounts/profile.html')
