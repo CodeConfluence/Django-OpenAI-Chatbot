@@ -18,4 +18,13 @@ urlpatterns = [
     path('account/settings/account_delete', views.account_delete_view, 
          name='account_delete'),
     path('profile/', views.profile_view, name='profile'),
+
+    path('agents/', views.agent_list_view, name='agent_list'), # list of agents
+    path('agents/create/', views.create_agent_view, name='create_agent'), # create a new agent
+    path('agents/<int:agent_id>/', views.agent_detail_view, name='agent_detail'), # view agent details
+    path('agents/<int:agent_id>/edit/', views.update_agent_view, name='edit_agent'), # update agent details
+    path('agents/<int:agent_id>/delete/', views.delete_agent_view, name='delete_agent'), # delete agent
+    path('agents/selection/', views.agent_selection_view, name='agent_selection'), # where the user whichever agent they're going to use
+
+    # path('agents/<int:agent_id>/chat/', views.chat_interface_view, name='agent_chat'), still need to work on this
 ]

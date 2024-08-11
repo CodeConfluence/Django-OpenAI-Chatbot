@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView, LoginView, LogoutView
 from django.urls import reverse_lazy
@@ -8,6 +8,8 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login
+from .models import Agent
+from .forms import AgentForm
 
 def register_view(request):
     if request.method == 'POST':
@@ -81,3 +83,63 @@ def account_delete_view(request):
         user.delete()
         return redirect('home')
     return render(request, 'accounts/account_delete_confirmation.html')
+
+@login_required
+def create_agent_view(request): # create a new agent
+   if request.method == 'POST':
+       form = AgentForm(request.POST, request.FILES)
+       if form.is_valid(): # save agent and go to agent list
+           agent = form.save(commit=False)
+           agent.creator = request.user
+           agent.save()
+           for f in request.FILES.getlist('resources'):
+               agent.resources.save(f.name, f)
+           return redirect('agent_list') # go to agent list
+   else:
+       form = AgentForm()
+   return render(request, 'agents/create_agent.html', {'form': form}) # go to create agent page
+
+@login_required
+def agent_list_view(request): # getting list of agents
+   agents = Agent.objects.filter(creator=request.user)
+   return render(request, 'agents/agent_list.html', {'agents': agents}) # render agent list
+
+@login_required
+def agent_detail_view(request, agent_id): # for viewing agent details
+   agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+   return render(request, 'agents/agent_detail.html', {'agent': agent}) # render agent details
+
+@login_required
+def update_agent_view(request, agent_id): # update agent details
+   agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+   if request.method == 'POST': # will save agent
+       form = AgentForm(request.POST, instance=agent)
+       if form.is_valid():
+           form.save()
+           return redirect('agent_list')
+   else: # go to the form
+       form = AgentForm(instance=agent)
+   return render(request, 'agents/update_agent.html', {'form': form, 'agent': agent})
+
+@login_required
+def delete_agent_view(request, agent_id):
+   agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+   if request.method == 'POST': # will delete agent
+       agent.delete()
+       return redirect('agent_list')
+   return render(request, 'agents/delete_agent.html', {'agent': agent}) # go back to the delete agent page
+
+@login_required
+def agent_selection_view(request): # where the user selects which agent they're going to use
+   user_agents = Agent.objects.filter(creator=request.user)
+   public_agents = Agent.objects.filter(is_public=True).exclude(creator=request.user)
+   return render(request, 'agents/agent_selection.html', { # go to the agent select page
+       'user_agents': user_agents,
+       'public_agents': public_agents,
+   })
+
+# @login_required
+# def chat_interface_view(request, agent_id):
+#   agent = get_object_or_404(Agent, id=agent_id)
+   #return render(request, 'chatbotApp/chat_interface.html', {'agent': agent})
+#need to work on this

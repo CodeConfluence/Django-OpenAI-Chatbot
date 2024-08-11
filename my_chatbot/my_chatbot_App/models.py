@@ -11,7 +11,7 @@ class Agent(models.Model):
     description = models.TextField(blank=True, null=True)
     is_public = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ('creator', 'name')
