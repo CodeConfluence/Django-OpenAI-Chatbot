@@ -422,7 +422,7 @@ h1 {
   display: flex;
   align-items: center;
   min-width: min-content;
-  width: 75dvw;
+  width: 90dvw;
   max-width: 500px;
 }
 
@@ -455,6 +455,14 @@ h1 {
 .chatbox-paperclip-icon,
 .chatbox-send-icon {
   cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.chatbox-paperclip-icon:focus,
+.chatbox-send-icon:focus {
+  outline: 2px solid var(--primary-blue-0);
+  border-radius: 50%;
 }
 
 /* Register page specific styles */
@@ -786,7 +794,7 @@ body.login-page::before {
   }
 
   .chatbot-chat-message-content {
-    width: 30ch;
+    width: 40ch;
   }
 }
 
@@ -813,7 +821,7 @@ body.login-page::before {
   }
 
   .chatbot-chat-message-content {
-    width: 35ch;
+    width: 65ch;
     font-size: 1rem;
   }
 
@@ -823,13 +831,14 @@ body.login-page::before {
 
   .chatbox-paperclip-icon,
   .chatbox-send-icon {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
   }
 }
 
 @media (min-width: 1024px) {
   .chatbot-chat-message-content {
+    width: 75ch;
     font-size: 1.125rem;
   }
 }
