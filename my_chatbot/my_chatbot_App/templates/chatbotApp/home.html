@@ -96,8 +96,234 @@
           <!---->
         </div>
       </nav>
+
+      <div
+        class="chatbot-aside-wrapper chatbot-aside-menu-wrapper-inactive"
+        id="header-aside-menu-wrapper"
+      >
+        <aside
+          class="chatbot-aside-menu"
+          id="chatbot-aside-menu"
+        >
+          <div class="aside-menu-actions-wrapper">
+            <!-- exit menu svg -->
+            <svg
+              id="aside-menu-exit"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              role="button"
+              focusable="true"
+              aria-label="Exit aside menu"
+              tabindex="1"
+            >
+              <title id="aside-exit-titleID">Exit aside menu</title>
+              <desc id="aside-exit-descID">
+                Icon representing a 'exit' for the aside menu
+              </desc>
+              <line
+                x1="18"
+                y1="6"
+                x2="6"
+                y2="18"
+              ></line>
+              <line
+                x1="6"
+                y1="6"
+                x2="18"
+                y2="18"
+              ></line>
+            </svg>
+            <!---->
+
+            <!-- create agent svg -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              role="button"
+              focusable="true"
+              aria-label="Exit aside menu"
+              tabindex="1"
+            >
+              <title id="aside-create-titleID">Create new agent</title>
+              <desc id="aside-create-descID">
+                Icon representing a button to create a new agent
+              </desc>
+              <path
+                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+              ></path>
+              <path
+                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+              ></path>
+            </svg>
+            <!---->
+          </div>
+
+          <img
+            src="{% static 'images/socialbrain.png' %}"
+            alt="SocialBrain.ai Logo"
+            class="logo"
+            width="75"
+            height="75"
+          />
+
+          <div class="aside-menu-searchbar">
+            <!-- search icon svg -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#000000"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              role="button"
+              focusable="true"
+              aria-label="Search agents"
+              tabindex="1"
+            >
+              <title id="aside-searchbar-titleID">Search query button</title>
+              <desc id="aside-searchbar-descID">
+                Icon representing a button to query results
+              </desc>
+              <circle
+                cx="11"
+                cy="11"
+                r="8"
+              ></circle>
+              <line
+                x1="21"
+                y1="21"
+                x2="16.65"
+                y2="16.65"
+              ></line>
+            </svg>
+            <!---->
+            <form>
+              <input
+                placeholder="Search Agents"
+                type="text"
+                id="aside-search-bar"
+                class="aside-search-bar"
+              />
+            </form>
+          </div>
+
+          <div class="aside-previous-agents-wrapper">
+            <p class="aside-previous-agents-text">My Agents</p>
+
+            <div class="previous-agents-cards-wrapper">
+              <div class="previous-agents-content-wrapper">
+                <p class="previous-agents-title">Test Agent</p>
+              </div>
+
+              <div class="previous-agents-content-wrapper">
+                <p class="previous-agents-title">Test Agent</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="aside-recommended-agents-wrapper">
+            <p class="aside-recommended-agents-text">Recommended Agents</p>
+
+            <div class="recommended-agents-cards-wrapper">
+              <div class="recommended-agents-content-wrapper">
+                <img
+                  class="recommended-agents-icon"
+                  src="{% static 'images/amazon.svg' %}"
+                  alt="Amazon's logo"
+                />
+                <p class="recommended-agents-title">Amazon</p>
+              </div>
+
+              <div class="recommended-agents-content-wrapper">
+                <img
+                  class="recommended-agents-icon"
+                  src="{% static 'images/youtube.svg' %}"
+                  alt="YouTube's logo"
+                />
+                <p class="recommended-agents-title">YouTube</p>
+              </div>
+
+              <div class="recommended-agents-content-wrapper">
+                <img
+                  class="recommended-agents-icon"
+                  src="{% static 'images/discord.svg' %}"
+                  alt="Discord's logo"
+                />
+                <p class="recommended-agents-title">Discord</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
     </header>
 
     <main></main>
+
+    <script>
+      // vars
+      const hamburgerMenu = document.getElementById("header-hamburger-menu");
+
+      const exitIcon = document.getElementById("aside-menu-exit");
+
+      const asideMenuWrapper = document.getElementById(
+        "header-aside-menu-wrapper"
+      );
+
+      const asideMenu = document.getElementById("chatbot-aside-menu");
+
+      // event listeners
+      asideMenu.addEventListener("click", (e) => e.stopPropagation());
+
+      asideMenuWrapper.addEventListener("click", handleAsideMenuClose);
+
+      hamburgerMenu.addEventListener("click", handleAsideMenuOpen);
+
+      exitIcon.addEventListener("click", handleAsideMenuClose);
+
+      hamburgerMenu.addEventListener("keypress", (e) =>
+        e.key === "Enter" ? handleAsideMenuOpen(e) : null
+      );
+
+      exitIcon.addEventListener("keypress", (e) =>
+        e.key === "Enter" ? handleAsideMenuClose(e) : null
+      );
+
+      // event handlers
+
+      function handleAsideMenuOpen(e) {
+        e.stopPropagation();
+
+        asideMenu.classList.remove("chatbot-aside-menu-inactive");
+
+        asideMenuWrapper.classList.remove(
+          "chatbot-aside-menu-wrapper-inactive"
+        );
+      }
+
+      function handleAsideMenuClose(e) {
+        e.stopPropagation();
+
+        asideMenu.classList.add("chatbot-aside-menu-inactive");
+
+        asideMenuWrapper.classList.add("chatbot-aside-menu-wrapper-inactive");
+      }
+    </script>
   </body>
 </html>
