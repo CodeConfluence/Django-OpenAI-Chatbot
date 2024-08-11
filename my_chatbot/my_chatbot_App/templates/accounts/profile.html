@@ -8,111 +8,126 @@
     <link rel="icon" href="{% static 'images/Icon.png' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
 </head>
-<body class="profile-page">
-    <div class="profile-container">
-        <aside class="sidebar">
-            <ul>
-                <li><a href="#account" class="active">Account</a></li>
-                <li><a href="#agent">Agent</a></li>
-            </ul>
-        </aside>
-        <div class="main-content">
-            <div id="account" class="profile-section">
-                <h2>Account</h2>
-                <div class="profile-picture">
-                    <img src="{% static 'images/user.png' %}" alt="Edit" class="edit-icon">
-                </div>
-                
-                <div class="section-divider"></div>
-                
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Name</label>
-                        <div class="input-wrapper">
-                            <input type="text" name="name" placeholder="Name">
+    <body class="profile-page">
+        <header>
+            <nav class="profile-navigation">
+            </nav>
+        </header>
+        <div class="profile-container">
+            <aside class="sidebar">
+                <ul>
+                    <li><a href="#account" class="active">Account</a></li>
+                    <li><a href="#agent">Agent</a></li>
+                </ul>
+            </aside>
+            <div class="main-content">
+                <div id="account" class="profile-section">
+                    <h2>Account</h2>
+                    <div class="profile-picture">
+                        <img src="{% static 'images/user.png' %}" alt="Edit" class="edit-icon">
+                    </div>
+                    
+                    <div class="section-divider"></div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Name</label>
+                            <div class="input-wrapper">
+                                <input type="text" name="name" placeholder="Name">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Username</label>
+                            <div class="input-wrapper">
+                                <input type="text" name="Username" placeholder="Username">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Current Password</label>
+                            <div class="input-wrapper">
+                                <img src="{% static 'images/lock.svg' %}" alt="Lock" class="input-icon input-icon-left">
+                                <input type="password" name="current_password" placeholder="Current password">
+                                <img src="{% static 'images/eye-off.svg' %}" alt="Show/Hide" class="input-icon input-icon-right toggle-password">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>New Password</label>
+                            <div class="input-wrapper">
+                                <img src="{% static 'images/lock.svg' %}" alt="Lock" class="input-icon input-icon-left">
+                                <input type="password" name="new_password" placeholder="New password">
+                                <img src="{% static 'images/eye-off.svg' %}" alt="Show/Hide" class="input-icon input-icon-right toggle-password">
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="input-group">
-                        <label>Username</label>
-                        <div class="input-wrapper">
-                            <input type="text" name="Username" placeholder="Username">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-divider"></div>
-
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Current Password</label>
-                        <div class="input-wrapper">
-                            <img src="{% static 'images/lock.svg' %}" alt="Lock" class="input-icon input-icon-left">
-                            <input type="password" name="current_password" placeholder="Current password">
-                            <img src="{% static 'images/eye-off.svg' %}" alt="Show/Hide" class="input-icon input-icon-right toggle-password">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>New Password</label>
-                        <div class="input-wrapper">
-                            <img src="{% static 'images/lock.svg' %}" alt="Lock" class="input-icon input-icon-left">
-                            <input type="password" name="new_password" placeholder="New password">
-                            <img src="{% static 'images/eye-off.svg' %}" alt="Show/Hide" class="input-icon input-icon-right toggle-password">
-                        </div>
+                    <div class="button-group">
+                        <button class="btn save-changes">Save Changes</button>
+                        <button class="btn btn-delete delete-account">Delete Account</button>
                     </div>
                 </div>
                 
-                <button class="btn">Save Changes</button>
-            </div>
-            
-            <div id="agent" class="profile-section" style="display: none;">
-                <h2>Agents</h2>
-                <p>Manage your custom AI agents here. You can create, edit, and delete agents tailored to your specific needs.</p>
-                <ul class="agent-list">
-                    <li class="agent-item">
-                        <span>Marketing Assistant</span>
-                        <div class="agent-actions">
-                            <button class="btn">Edit</button>
-                            <button class="btn btn-delete">Delete</button>
-                        </div>
-                    </li>
-                    <li class="agent-item">
-                        <span>Code Reviewer</span>
-                        <div class="agent-actions">
-                            <button class="btn">Edit</button>
-                            <button class="btn btn-delete">Delete</button>
-                        </div>
-                    </li>
-                </ul>
-                <button class="btn" style="margin-top: 20px;">Create New Agent</button>
+                <div id="agent" class="profile-section" style="display: none;">
+                    <h2>Agents</h2>
+                    <p>Manage your custom AI agents here. You can create, edit, and delete agents tailored to your specific needs.</p>
+                    <ul class="agent-list">
+                        <li class="agent-item">
+                            <span class="agent-name">Marketing Assistant</span>
+                            <div class="agent-actions">
+                                <button class="btn">Edit</button>
+                                <button class="btn btn-delete">Delete</button>
+                            </div>
+                        </li>
+                        <li class="agent-item">
+                            <span class="agent-name">Code Reviewer</span>
+                            <div class="agent-actions">
+                                <button class="btn">Edit</button>
+                                <button class="btn btn-delete">Delete</button>
+                            </div>
+                        </li>
+                    </ul>
+                    <button class="btn" style="margin-top: 20px;">Create New Agent</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        // Handle sidebar navigation
-        document.querySelectorAll('.sidebar a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                document.querySelectorAll('.profile-section').forEach(section => {
-                    section.style.display = 'none';
+        <script>
+            document.querySelectorAll('.sidebar a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.querySelectorAll('.profile-section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    document.getElementById(targetId).style.display = 'block';
+                    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
                 });
-                document.getElementById(targetId).style.display = 'block';
-                document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
             });
-        });
 
-        // Toggle password visibility
-        document.querySelectorAll('.toggle-password').forEach(icon => {
-            icon.addEventListener('click', function() {
-                const input = this.previousElementSibling;
-                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                input.setAttribute('type', type);
-                this.src = type === 'password' ? "{% static 'images/eye-off.svg' %}" : "{% static 'images/eye.svg' %}";
+            document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.toggle-password').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const input = this.previousElementSibling;
+                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                    input.setAttribute('type', type);
+
+                    if (type === 'text') {
+                        input.classList.add('password-input');
+                    } else {
+                        input.classList.remove('password-input');
+                    }
+                    
+                    this.src = type === 'password' ? "{% static 'images/eye-off.svg' %}" : "{% static 'images/eye.svg' %}";
+                });
             });
         });
-    </script>
-</body>
+            
+        </script>
+    </body>
 </html>
