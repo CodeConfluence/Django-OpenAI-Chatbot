@@ -67,7 +67,6 @@ class CustomPasswordResetView(PasswordResetView):
 def home_view(request):
     return render(request, 'chatbotApp/home.html')
 
-@login_required
 def profile_view(request):
     return render(request, 'accounts/profile.html')
 
