@@ -64,7 +64,6 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LoginRequiredMixin, LogoutView):
-    template_name = 'accounts/logout.html'
     next_page = reverse_lazy('login')
 
 
@@ -75,14 +74,20 @@ class CustomPasswordResetView(LoginRequiredMixin, PasswordResetView):
     success_url = '/password_reset/done/'
 
 def home_view(request):
-    return render(request, 'chatbotApp/home.html')
+    agents = Agent.objects.filter(creator=request.user)
+    context = {
+        'agents': agents,
+    }
+    return render(request, 'chatbotApp/home.html', context)
 
 @login_required
 def profile_view(request):
     user = request.user
+    agents = Agent.objects.filter(creator=request.user)
     context = {
         'username': user.username,
         'name': user.first_name,
+        'agents': agents,
     }
     return render(request, 'accounts/profile.html', context)
 
@@ -164,26 +169,6 @@ def agent_detail_view(request, agent_id): # for viewing agent details
    return render(request, 'agents/agent_detail.html', {'agent': agent}) # render agent details
 
 @login_required
-def update_agent_view(request, agent_id): # update agent details
-   agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
-   if request.method == 'POST': # will save agent
-       form = AgentForm(request.POST, instance=agent)
-       if form.is_valid():
-           form.save()
-           return redirect('agent_list')
-   else: # go to the form
-       form = AgentForm(instance=agent)
-   return render(request, 'agents/update_agent.html', {'form': form, 'agent': agent})
-
-@login_required
-def delete_agent_view(request, agent_id):
-   agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
-   if request.method == 'POST': # will delete agent
-       agent.delete()
-       return redirect('agent_list')
-   return render(request, 'agents/delete_agent.html', {'agent': agent}) # go back to the delete agent page
-
-@login_required
 def agent_selection_view(request): # where the user selects which agent they're going to use
    user_agents = Agent.objects.filter(creator=request.user)
    public_agents = Agent.objects.filter(is_public=True).exclude(creator=request.user)
@@ -212,16 +197,42 @@ def create_agent_view(request):
                 Resource.objects.create(agent=agent, title=new_name, file=file)
 
             return redirect(reverse_lazy('profile'))
-    else:
-        agent_form = AgentForm()
-        resource_form = ResourceForm()
 
+    return render(request, 'chatbotApp/create.html')
+
+@login_required
+def update_agent_view(request, agent_id):
+    agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+    if request.method == 'POST':
+        agent_form = AgentForm(request.POST, instance=agent)
+        if agent_form.is_valid():
+            # Save the updated agent
+            agent_form.save()
+            
+            files = request.FILES.getlist('files')
+            for file in files:
+                # Extract the original file name and extension (learning reference)
+                original_name, extension = os.path.splitext(file.name)
+                # Create a new file name with the agent's name appended
+                new_name = f"{original_name}_{slugify(agent.name)}{extension}"
+                # Save the file with the new name
+                Resource.objects.update(title=new_name, file=file)
+            
+            return redirect(reverse_lazy('profile'))
+        
     context = {
-        'form': agent_form,
-        'resource_form': resource_form,
+        'agent': agent,
     }
 
-    return render(request, 'chatbotApp/create.html', context)
+    return render(request, 'chatbotApp/edit.html', context)
+
+@login_required
+def delete_agent_view(request, agent_id):
+   agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+   if request.method == 'POST': # will delete agent
+       agent.delete()
+       return redirect('profile')
+   return render(request, 'chatbotApp/agent_delete_confirmation.html', {'agent': agent}) # go back to the delete agent page
 
 # @login_required
 # def chat_interface_view(request, agent_id):
