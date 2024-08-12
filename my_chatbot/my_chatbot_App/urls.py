@@ -27,7 +27,7 @@ urlpatterns = [
     path('agents/<int:agent_id>/edit/', views.update_agent_view, name='edit_agent'), # update agent details
     path('agents/<int:agent_id>/delete/', views.delete_agent_view, name='delete_agent'), # delete agent
     path('agents/selection/', views.agent_selection_view, name='agent_selection'), # where the user whichever agent they're going to use
-
+    path('generate-content/<int:agent_id>/', views.generate_content_view, name='generate_content'),
     # path('agents/<int:agent_id>/chat/', views.chat_interface_view, name='agent_chat'), still need to work on this
 ]
 

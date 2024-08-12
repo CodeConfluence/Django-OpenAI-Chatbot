@@ -7,11 +7,18 @@ from django.dispatch import receiver
 def upload_resource_path(instance, filename):
     return f'uploads/agents/{instance.agent.id}/{filename}'
 
+with open('path/to/model_default_instructions.txt', 'r') as file:
+    default_instructions = file.read()
+
 class Agent(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='agents')
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    instructions = models.TextField(blank=True, null=True)
+    instructions = models.TextField(
+        blank=True, 
+        null=True,
+        default=default_instructions           
+    )
     is_public = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
