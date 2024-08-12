@@ -138,6 +138,20 @@ def agent_selection_view(request): # where the user selects which agent they're 
        'public_agents': public_agents,
    })
 
+def create_agent_view(request): 
+    if request.method == 'POST':
+        form = AgentForm(request.POST, request.FILES)
+        if form.is_valid():
+            agent = form.save(commit=False)
+            agent.creator = request.user
+            agent.save()
+            for f in request.FILES.getlist('resources'):
+                agent.resources.save(f.name, f)
+            return redirect('agent_list')
+    else:
+        form = AgentForm()
+    return render(request, 'chatbotApp/create.html', {'form': form})
+
 # @login_required
 # def chat_interface_view(request, agent_id):
 #   agent = get_object_or_404(Agent, id=agent_id)

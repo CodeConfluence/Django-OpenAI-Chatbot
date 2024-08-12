@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="create-agent-container">
+    <h1>Configure Agent</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Name your agent" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Describe what your Agent does and how to respond to user messages" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="instructions">Instructions</label>
+            <textarea id="instructions" name="instructions" placeholder="What is the purpose of the agent in this interaction? Are there specific topics the agent should focus on or avoid?" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="knowledge">Knowledge</label>
+            <p>Provides a collection of resources, documents, and information that agents can access to enhance their responses and better assist users in various queries.</p>
+            <button class="btn">Upload Files</button>
+        </div>
+        <div class="form-actions">
+            <button class="btn">Create Agent</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
