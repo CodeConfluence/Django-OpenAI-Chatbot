@@ -154,10 +154,14 @@ import google.generativeai as genai
 
 genai.configure(api_key=config('API_KEY'))
 
-model = genai.GenerativeModel('gemini-1.5-flash')
-
 @csrf_exempt
-def generate_content_view(request):
+def generate_content_view(request, agent_id):
+    agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+
+    model=genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    system_instruction=agent.instructions)
+    
     if request.method == "POST":
         user_message = request.POST.get('message')
 
