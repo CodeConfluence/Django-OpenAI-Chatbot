@@ -18,7 +18,7 @@
       href="{% static 'styles/styles.css' %}"
     />
   </head>
-  <body class="chatbot">
+  <body class="chatbot-page">
     <div
       class="chatbot-aside-wrapper chatbot-aside-menu-wrapper-inactive"
       id="header-aside-menu-wrapper"
@@ -61,35 +61,6 @@
               x2="18"
               y2="18"
             ></line>
-          </svg>
-          <!---->
-
-          <!-- create agent svg -->
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#ffffff"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            role="button"
-            focusable="true"
-            aria-label="Create a new agent"
-            tabindex="1"
-          >
-            <title id="aside-create-titleID">Create new agent</title>
-            <desc id="aside-create-descID">
-              Icon representing a button to create a new agent
-            </desc>
-            <path
-              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-            ></path>
-            <path
-              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-            ></path>
           </svg>
           <!---->
         </div>
@@ -377,8 +348,12 @@
 
       const userMessage = document.getElementById("chatbot-chatbox-user-input");
 
+      const agents = document.querySelectorAll(
+        ".previous-agents-content-wrapper"
+      );
+
       // event listeners
-      window.onload = scrollToBottom();
+      window.onload = handleChatChange();
 
       asideMenu.addEventListener("click", (e) => e.stopPropagation());
 
@@ -405,13 +380,85 @@
 
       sendMessage.addEventListener("click", addUserMessage);
 
+      agents.forEach((element) =>
+        element.addEventListener("click", handleActiveAgent)
+      );
+
       // event handlers
+
+      function handleChatChange() {
+        const agent = getQueryParameters();
+
+        if (getLocalStorage(agent)) {
+          const previousMessages = JSON.parse(getLocalStorage(agent));
+
+          chatbox.innerHTML = "";
+          chatbox.style.height = "100%";
+
+          previousMessages.forEach((element) => {
+            if (typeof element === "object") {
+              addAgentMessage(
+                element.agentName,
+                element.message,
+                element.error ? true : false
+              );
+            } else {
+              chatbox.insertAdjacentHTML(
+                "beforeend",
+                `<div class="chatbot-user-output-wrapper">
+                <div class="chatbot-user-output-content">
+                  <div class="chatbot-user-message">
+                    <p class="chatbot-user-message-content">
+                      ${element}
+                    </p>
+                  </div>
+                </div>
+              </div>`
+              );
+            }
+          });
+
+          chatbox.insertAdjacentHTML(
+            "beforeend",
+            `<div class="previous-messages-divider">
+            <div class="previous-messages-divisor"></div>
+            <p class="previous-messages-text">Previous Messages</p>
+            <div class="previous-messages-divisor"></div>
+          </div>`
+          );
+
+          scrollToBottom();
+        } else {
+          chatbox.innerHTML = "";
+          chatbox.style.height = "100%";
+        }
+      }
 
       function scrollToBottom() {
         const scrollableElement = document.querySelector(
           ".chatbot-chat-wrapper"
         );
         scrollableElement.scrollTop = scrollableElement.scrollHeight;
+      }
+
+      function handleActiveAgent(e) {
+        agents.forEach((element) =>
+          element.classList.remove("currently-selected-agent")
+        );
+
+        this.classList.add("currently-selected-agent");
+
+        const currentAgent = this.children[0].textContent.toLowerCase();
+
+        const params = new URLSearchParams(window.location.search);
+        params.set("agent", currentAgent);
+        window.history.replaceState(
+          {},
+          "",
+          `${window.location.pathname}?${params}`
+        );
+
+        handleChatChange();
       }
 
       function handleAsideMenuOpen(e) {
@@ -432,10 +479,10 @@
         asideMenuWrapper.classList.add("chatbot-aside-menu-wrapper-inactive");
       }
 
-      function addAgentMessage(agentTitle, agentMessage) {
+      function addAgentMessage(agentTitle, agentMessage, error = false) {
         chatbox.insertAdjacentHTML(
           "beforeend",
-          `<div class="chatbot-chat-output-wrapper">
+          `<div class="chatbot-chat-output-wrapper ">
                 <img
                   src="{% static 'images/Icon.png' %}"
                   alt="SocialBrain.ai Logo"
@@ -447,9 +494,13 @@
                 <div class="chatbot-chat-output-content">
                   <div class="chatbot-chat-output-titles">
                     <p class="chatbot-chat-social-brain">Social Brain</p>
-                    <p class="chatbot-chat-agent-name">${agentTitle}</p>
+                    <p class="chatbot-chat-agent-name ${
+                      error ? "chatbot-chat-agent-name-error" : ""
+                    }">${agentTitle}</p>
                   </div>
-                  <div class="chatbot-chat-message">
+                  <div class="chatbot-chat-message ${
+                    error ? "chatbot-chat-message-error" : ""
+                  }">
                     <p class="chatbot-chat-message-content">
                       ${agentMessage}
                     </p>
@@ -459,7 +510,7 @@
         );
       }
 
-      function addUserMessage() {
+      async function addUserMessage() {
         const userMessage = document.getElementById(
           "chatbot-chatbox-user-input"
         );
@@ -483,13 +534,106 @@
 
         userMessage.value = "";
 
-        // TEMPORARY, REMOVE
+        const queryParam = getQueryParameters();
 
-        addAgentMessage(
-          "Amazon",
-          "Hello! I see you're experiencing an issue with your Amazon Prime membership. I'm here to help. Could you please provide more details about the problem you're encountering? Whether it's related to billing, access to Prime benefits, or anything else, I'll do my best to guide you through resolving it."
-        );
+        if (queryParam) setLocalStorage(queryParam, trimmedMessage);
+
+        const response = await postContentView(trimmedMessage);
+
         scrollToBottom();
+      }
+
+      async function postContentView(userMessage) {
+        try {
+          const postData = new URLSearchParams();
+
+          postData.append("message", userMessage);
+
+          const response = await fetch("agents/generate-content/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: postData.toString(),
+          });
+
+          if (!response.ok)
+            throw Error(
+              "Our services are currently down right now, please try again later!"
+            );
+
+          const data = await response.json();
+
+          if (!data)
+            throw Error(
+              "Our services are currently down right now, please try again later!"
+            );
+
+          const queryParam = getQueryParameters();
+
+          if (queryParam) setLocalStorage(queryParam, data);
+
+          return data;
+        } catch (error) {
+          console.error(error);
+
+          const errorTitle = "A Error Has Occurred";
+
+          const errorMessage =
+            "An Error has occurred, please try to generate a response again!";
+
+          addAgentMessage(errorTitle, errorMessage, true);
+
+          const queryParam = getQueryParameters();
+
+          if (queryParam)
+            setLocalStorage(
+              queryParam,
+              {
+                agentName: errorTitle,
+                message: errorMessage,
+                error: true,
+              },
+              true
+            );
+        }
+      }
+
+      function setLocalStorage(key, value, agent = false) {
+        if (getLocalStorage(key)) {
+          const previousMessages = JSON.parse(localStorage.getItem(key)) || [];
+
+          const newData = [
+            ...previousMessages,
+            agent
+              ? {
+                  agentName: value.agentName,
+                  message: value.message,
+                  error: value.error,
+                }
+              : value,
+          ];
+
+          localStorage.setItem(key, JSON.stringify(newData));
+        } else {
+          localStorage.setItem(
+            key,
+            JSON.stringify([
+              agent ? { agentName: agent.name, message: value } : value,
+            ])
+          );
+        }
+      }
+
+      function getLocalStorage(key) {
+        return localStorage.getItem(key);
+      }
+
+      function getQueryParameters() {
+        const searchParams = new URLSearchParams(window.location.search);
+
+        if (searchParams.has("agent")) return searchParams.get("agent");
+        else return false;
       }
     </script>
   </body>
