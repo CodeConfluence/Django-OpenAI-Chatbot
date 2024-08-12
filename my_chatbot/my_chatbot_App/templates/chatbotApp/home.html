@@ -583,7 +583,13 @@
 
           postData.append("message", userMessage);
 
-          const response = await fetch("agents/generate-content/", {
+          const queryString = window.location.search;
+
+          const agentId = queryString
+            .slice(queryString.search(/agent/i))
+            .split("=")[1];
+
+          const response = await fetch(`/generate-content/${agentId || ""}/`, {
             method: "POST",
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
@@ -673,6 +679,7 @@
       function toggleDropdown() {
         document.getElementById("profileDropdown").classList.toggle("show");
       }
+
       window.onclick = function (event) {
         if (!event.target.matches("#header-profile-menu")) {
           var dropdowns = document.getElementsByClassName("dropdown-content");
