@@ -227,15 +227,17 @@
 
           <div class="aside-previous-agents-wrapper">
             <p class="aside-previous-agents-text">My Agents</p>
-
+        
             <div class="previous-agents-cards-wrapper">
-              <div class="previous-agents-content-wrapper">
-                <p class="previous-agents-title">Test Agent</p>
-              </div>
-
-              <div class="previous-agents-content-wrapper">
-                <p class="previous-agents-title">Test Agent</p>
-              </div>
+                {% for agent in agents %}
+                <div class="previous-agents-content-wrapper">
+                    <p class="previous-agents-title">{{ agent.name }}</p>
+                </div>
+                {% empty %}
+                <div class="previous-agents-content-wrapper">
+                    <p class="previous-agents-title">No agents found.</p>
+                </div>
+                {% endfor %}
             </div>
           </div>
 

@@ -670,6 +670,7 @@ body.login-page::before {
 .btn {
   background-color: var(--primary-blue-0);
   color: var(--primary-white-0);
+  text-decoration: none;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;

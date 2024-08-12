@@ -81,20 +81,19 @@
                     <h2>Agents</h2>
                     <p>Manage your custom AI agents here. You can create, edit, and delete agents tailored to your specific needs.</p>
                     <ul class="agent-list">
+                        {% for agent in agents %}
                         <li class="agent-item">
-                            <span class="agent-name">Marketing Assistant</span>
+                            <span class="agent-name">{{ agent.name }}</span>
                             <div class="agent-actions">
-                                <button class="btn">Edit</button>
-                                <button class="btn btn-delete">Delete</button>
+                                <a href="{% url 'edit_agent' agent.id %}" class="btn">Edit</a>
+                                <a href="{% url 'delete_agent' agent.id %}" class="btn btn-delete">Delete</a>
                             </div>
                         </li>
+                        {% empty %}
                         <li class="agent-item">
-                            <span class="agent-name">Code Reviewer</span>
-                            <div class="agent-actions">
-                                <button class="btn">Edit</button>
-                                <button class="btn btn-delete">Delete</button>
-                            </div>
+                            <span>No agents found.</span>
                         </li>
+                        {% endfor %}
                     </ul>
                     <a href="{% url 'create_agent' %}" style="text-decoration: none; display: inline-block;">
                         <button class="btn" style="margin-top: 20px;">Create New Agent</button>

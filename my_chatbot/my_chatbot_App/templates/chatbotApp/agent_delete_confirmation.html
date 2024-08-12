@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Deletion Confirmation</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'images/Icon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body class="profile-page">
+    <header>
+        <nav class="profile-navigation">
+        </nav>
+    </header>
+    <div class="profile-container">
+        <div class="main-content">
+            <div class="delete-confirmation-section">
+                <h2>Are you sure you want to delete agent {{ agent.name }}?</h2>
+                <p>This action is irreversible. All data associated with this agent will be permanently deleted.</p>
+                <form method="POST" action="{% url 'delete_agent' agent.id %}">
+                    {% csrf_token %}
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-delete">Yes, Delete This Agent</button>
+                        <a href="{% url 'profile' %}">
+                            <button type="button" class="btn cancel-delete">Cancel</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
