@@ -1,23 +1,27 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from django.urls import reverse
 
 def upload_resource_path(instance, filename):
-    return f"resources/agent_{instance.agent.name}_{instance.agent.creator}/{filename}"
+    return f'uploads/agents/{instance.agent.id}/{filename}'
 
-# Create your models here.
 class Agent(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='agents')
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
+    instructions = models.TextField(blank=True, null=True)
     is_public = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ('creator', 'name')
 
     def __str__(self):
         return f"Agent: {self.name}"
+
+    def get_absolute_url(self):
+        return reverse('agent_detail', args=[str(self.id)])
 
 class Resource(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='resources')
@@ -27,6 +31,7 @@ class Resource(models.Model):
 
     def __str__(self):
         return self.title
+
     
 class Interaction(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='interactions')
