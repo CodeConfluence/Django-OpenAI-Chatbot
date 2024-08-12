@@ -13,6 +13,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.mixins import LoginRequiredMixin
 import os
 from django.utils.text import slugify
+from django.contrib.auth import logout
 
 from .models import Agent, Resource
 from .forms import AgentForm, ResourceForm
@@ -64,7 +65,10 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LoginRequiredMixin, LogoutView):
-    next_page = reverse_lazy('login')
+    def post(self, request):
+        logout(request)
+        print("User logged out successfully") 
+        return redirect('home')
 
 
 class CustomPasswordResetView(LoginRequiredMixin, PasswordResetView):
