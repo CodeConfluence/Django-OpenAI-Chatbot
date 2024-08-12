@@ -95,16 +95,12 @@ def account_delete_view(request):
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from google.cloud import aiplatform
 from decouple import config
+import google.generativeai as genai
 
-# Initialize the Vertex AI client
-PROJECT_ID = config('PROJECT_ID')
-LOCATION = "us-central1"  
-MODEL_NAME = "projects/{}/locations/{}/models/{}".format(PROJECT_ID, LOCATION, "gemini-1.5-flash-001")
+genai.configure(api_key=config('API_KEY'))
 
-aiplatform.init(project=PROJECT_ID, location=LOCATION)
-endpoint = aiplatform.Endpoint(endpoint_name=MODEL_NAME)
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 @csrf_exempt
 def generate_content_view(request):
@@ -114,14 +110,7 @@ def generate_content_view(request):
         if not user_message:
             return JsonResponse({"error": "No message provided"}, status=400)
 
-        request_payload = {
-            "instances": [
-                {"input_text": user_message}
-            ]
-        }
-
-        response = endpoint.predict(requests=request_payload)
-        chatbot_response = response.predictions[0]['output_text']
+        chatbot_response = model.generate_content(user_message)
 
         return JsonResponse({"response": chatbot_response})
 
