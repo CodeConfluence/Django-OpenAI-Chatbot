@@ -278,37 +278,13 @@
         </nav>
       </header>
 
-      <main class="chatbot-chat-wrapper">
-        <!-- Placeholder message -->
-        <div class="chatbot-chat-output-wrapper">
-          <img
-            src="{% static 'images/Icon.png' %}"
-            alt="SocialBrain.ai Logo"
-            class="chatbot-chat-social-brain-icon"
-            width="36"
-            height="36"
-          />
+      <main
+        class="chatbot-chat-wrapper"
+        id="chatbot-chat-wrapper"
+      ></main>
 
-          <div class="chatbot-chat-output-content">
-            <div class="chatbot-chat-output-titles">
-              <p class="chatbot-chat-social-brain">Social Brain</p>
-              <p class="chatbot-chat-agent-name">Amazon</p>
-            </div>
-            <!-- This should be dynamic and based on the current Agent name -->
-            <div class="chatbot-chat-message">
-              <p class="chatbot-chat-message-content">
-                Hello! I see you're experiencing an issue with your Amazon Prime
-                membership. I&apos;m here to help. Could you please provide more
-                details about the problem you're encountering? Whether it's
-                related to billing, access to Prime benefits, or anything else,
-                I'll do my best to guide you through resolving it.
-              </p>
-              <!-- This should be dynamic and based on the output of the agent -->
-            </div>
-          </div>
-        </div>
-
-        <!-- chat box -->
+      <!-- chat box -->
+      <div class="chatbox-wrapper">
         <div class="chatbot-chatbox-wrapper">
           <!-- paperclip svg -->
           <svg
@@ -345,10 +321,12 @@
             tabindex="0"
             dir="auto"
             rows="1"
+            id="chatbot-chatbox-user-input"
           ></textarea>
 
           <!-- send svg -->
           <svg
+            id="user-send-message"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -376,9 +354,9 @@
             ></line>
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
           </svg>
-          <!---->
         </div>
-      </main>
+      </div>
+      <!---->
     </div>
 
     <script>
@@ -393,7 +371,15 @@
 
       const asideMenu = document.getElementById("chatbot-aside-menu");
 
+      const chatbox = document.getElementById("chatbot-chat-wrapper");
+
+      const sendMessage = document.getElementById("user-send-message");
+
+      const userMessage = document.getElementById("chatbot-chatbox-user-input");
+
       // event listeners
+      window.onload = scrollToBottom();
+
       asideMenu.addEventListener("click", (e) => e.stopPropagation());
 
       asideMenuWrapper.addEventListener("click", handleAsideMenuClose);
@@ -410,7 +396,23 @@
         e.key === "Enter" ? handleAsideMenuClose(e) : null
       );
 
+      userMessage.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          return addUserMessage();
+        }
+      });
+
+      sendMessage.addEventListener("click", addUserMessage);
+
       // event handlers
+
+      function scrollToBottom() {
+        const scrollableElement = document.querySelector(
+          ".chatbot-chat-wrapper"
+        );
+        scrollableElement.scrollTop = scrollableElement.scrollHeight;
+      }
 
       function handleAsideMenuOpen(e) {
         e.stopPropagation();
@@ -428,6 +430,66 @@
         asideMenu.classList.add("chatbot-aside-menu-inactive");
 
         asideMenuWrapper.classList.add("chatbot-aside-menu-wrapper-inactive");
+      }
+
+      function addAgentMessage(agentTitle, agentMessage) {
+        chatbox.insertAdjacentHTML(
+          "beforeend",
+          `<div class="chatbot-chat-output-wrapper">
+                <img
+                  src="{% static 'images/Icon.png' %}"
+                  alt="SocialBrain.ai Logo"
+                  class="chatbot-chat-social-brain-icon"
+                  width="36"
+                  height="36"
+                />
+
+                <div class="chatbot-chat-output-content">
+                  <div class="chatbot-chat-output-titles">
+                    <p class="chatbot-chat-social-brain">Social Brain</p>
+                    <p class="chatbot-chat-agent-name">${agentTitle}</p>
+                  </div>
+                  <div class="chatbot-chat-message">
+                    <p class="chatbot-chat-message-content">
+                      ${agentMessage}
+                    </p>
+                  </div>
+                </div>
+              </div>`
+        );
+      }
+
+      function addUserMessage() {
+        const userMessage = document.getElementById(
+          "chatbot-chatbox-user-input"
+        );
+
+        const trimmedMessage = userMessage.value.trim();
+
+        if (!trimmedMessage) return;
+
+        chatbox.insertAdjacentHTML(
+          "beforeend",
+          `<div class="chatbot-user-output-wrapper">
+                <div class="chatbot-user-output-content">
+                  <div class="chatbot-user-message">
+                    <p class="chatbot-user-message-content">
+                      ${trimmedMessage}
+                    </p>
+                  </div>
+                </div>
+              </div>`
+        );
+
+        userMessage.value = "";
+
+        // TEMPORARY, REMOVE
+
+        addAgentMessage(
+          "Amazon",
+          "Hello! I see you're experiencing an issue with your Amazon Prime membership. I'm here to help. Could you please provide more details about the problem you're encountering? Whether it's related to billing, access to Prime benefits, or anything else, I'll do my best to guide you through resolving it."
+        );
+        scrollToBottom();
       }
     </script>
   </body>
