@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block content %}
+<header>
+    <nav class="profile-navigation">
+    </nav>
+</header>
 <div class="create-agent-container">
     <h1>Configure Agent</h1>
     <form method="post" enctype="multipart/form-data">
@@ -20,8 +24,27 @@
         </div>
         <div class="form-group">
             <label for="knowledge">Knowledge</label>
-            <p>Provides a collection of resources, documents, and information that agents can access to enhance their responses and better assist users in various queries.</p>
+            <p class="visibility-description">Provides a collection of resources, documents, and information that agents can access to enhance their responses and better assist users in various queries.</p>
             <button class="btn">Upload Files</button>
+        </div>
+        <div class="form-group visibility-section">
+            <label>Visibility</label>
+            <div class="visibility-option">
+                <span class="visibility-text">Public</span>
+                <label class="switch">
+                    <input type="checkbox" id="public-toggle" name="public-visibility">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <p class="visibility-description">When enabled, your agent will be publicly accessible. Turning this off will make the bot private.</p>
+            <div class="visibility-option">
+                <span class="visibility-text">Private</span>
+                <label class="switch">
+                    <input type="checkbox" id="recommendations-toggle" name="recommendations-visibility">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <p class="visibility-description">When enabled, your agent will not be publicly accessible. Turning this off will make the bot private.</p>
         </div>
         <div class="form-actions">
             <button class="btn">Create Agent</button>
