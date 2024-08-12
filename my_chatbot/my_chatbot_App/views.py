@@ -73,7 +73,6 @@ class CustomPasswordResetView(LoginRequiredMixin, PasswordResetView):
     subject_template_name = 'registration/password_reset_subject.txt'
     success_url = '/password_reset/done/'
 
-@login_required
 def home_view(request):
     agents = Agent.objects.filter(creator=request.user)
     context = {
