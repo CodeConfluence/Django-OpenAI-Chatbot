@@ -222,6 +222,7 @@ def create_agent_view(request):
         if agent_form.is_valid():
             agent = agent_form.save(commit=False)
             agent.creator = request.user
+            agent.user_defined_instructions = agent_form.cleaned_data.get('instructions')
             agent.save()
             
             # Handling file upload for resources
@@ -244,8 +245,9 @@ def update_agent_view(request, agent_id):
     if request.method == 'POST':
         agent_form = AgentForm(request.POST, instance=agent)
         if agent_form.is_valid():
-            # Save the updated agent
-            agent_form.save()
+            agent = agent_form.save(commit=False)
+            agent.user_defined_instructions = agent_form.cleaned_data.get('instructions')
+            agent.save()
             
             files = request.FILES.getlist('files')
             for file in files:

@@ -24,8 +24,11 @@ class Agent(models.Model):
     description = models.TextField(blank=True, null=True)
     instructions = models.TextField(
         blank=True, 
-        null=True,
-        default=default_instructions           
+        null=True          
+    )
+    user_defined_instructions = models.TextField(
+        blank=True, 
+        null=True
     )
     is_public = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -33,6 +36,13 @@ class Agent(models.Model):
 
     class Meta:
         unique_together = ('creator', 'name')
+
+    def save(self, *args, **kwargs):
+        if self.instructions:
+            self.instructions = f"{default_instructions}\n\nUSER HAS DEFINED ADDITIONAL INSTRUCTIONS:\n\n{self.instructions}"
+        elif not self.instructions:
+            self.instructions = default_instructions
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Agent: {self.name}"
