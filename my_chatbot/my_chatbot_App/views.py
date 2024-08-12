@@ -13,6 +13,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.mixins import LoginRequiredMixin
 import os
 from django.utils.text import slugify
+from django.contrib.auth import logout
 
 from .models import Agent, Resource
 from .forms import AgentForm, ResourceForm
@@ -64,7 +65,10 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LoginRequiredMixin, LogoutView):
-    next_page = reverse_lazy('login')
+    def post(self, request):
+        logout(request)
+        print("User logged out successfully") 
+        return redirect('home')
 
 
 class CustomPasswordResetView(LoginRequiredMixin, PasswordResetView):
@@ -73,8 +77,16 @@ class CustomPasswordResetView(LoginRequiredMixin, PasswordResetView):
     subject_template_name = 'registration/password_reset_subject.txt'
     success_url = '/password_reset/done/'
 
+
 def home_view(request):
-    agents = Agent.objects.filter(creator=request.user)
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        # User is authenticated, retrieve agents associated with the user
+        agents = Agent.objects.filter(creator=request.user)
+    else:
+        # User is not authenticated, set agents to None or an empty list
+        agents = None
+
     context = {
         'agents': agents,
     }
@@ -142,10 +154,14 @@ import google.generativeai as genai
 
 genai.configure(api_key=config('API_KEY'))
 
-model = genai.GenerativeModel('gemini-1.5-flash')
-
 @csrf_exempt
-def generate_content_view(request):
+def generate_content_view(request, agent_id):
+    agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+
+    model=genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    system_instruction=agent.instructions)
+    
     if request.method == "POST":
         user_message = request.POST.get('message')
 

@@ -214,8 +214,9 @@
           </svg>
           <!---->
           <!-- inline profile svg -->
+          {% if user.is_authenticated %}
           <div class="header-profile-wrapper">
-            <a href="{% url 'profile' %}">
+            <div class="dropdown">
               <svg
                 id="header-profile-menu"
                 xmlns="http://www.w3.org/2000/svg"
@@ -232,6 +233,7 @@
                 focusable="true"
                 aria-label="Expand to view profile options"
                 tabindex="1"
+                onclick="toggleDropdown()"
               >
                 <title id="user-profile-titleID">Profile dropdown menu</title>
                 <desc id="user-profile-descID">
@@ -244,8 +246,40 @@
                   r="4"
                 ></circle>
               </svg>
-            </a>
+              <div
+                id="profileDropdown"
+                class="dropdown-content"
+              >
+                <a href="{% url 'profile' %}">Account Settings</a>
+                <form
+                  action="{% url 'logout' %}"
+                  method="post"
+                  id="logout-form"
+                >
+                  {% csrf_token %}
+                  <a
+                    href="javascript:void(0);"
+                    onclick="document.getElementById('logout-form').submit();"
+                    >Log Out</a
+                  >
+                </form>
+              </div>
+            </div>
           </div>
+          {% else %}
+          <div class="auth-buttons">
+            <a
+              href="{% url 'register' %}"
+              class="auth-button register"
+              >Register</a
+            >
+            <a
+              href="{% url 'login' %}"
+              class="auth-button login"
+              >Login</a
+            >
+          </div>
+          {% endif %}
         </nav>
       </header>
 
@@ -635,6 +669,21 @@
         if (searchParams.has("agent")) return searchParams.get("agent");
         else return false;
       }
+
+      function toggleDropdown() {
+        document.getElementById("profileDropdown").classList.toggle("show");
+      }
+      window.onclick = function (event) {
+        if (!event.target.matches("#header-profile-menu")) {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };
     </script>
   </body>
 </html>

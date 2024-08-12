@@ -3,6 +3,9 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('logout/', views.CustomLogoutView.as_view(), name='logout'),
+    path('home/', views.home_view, name='home'),
     path('password_reset/', views.CustomPasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(
         template_name='registration/password_reset_done.html'), name='password_reset_done'),
@@ -20,6 +23,6 @@ urlpatterns = [
     path('agents/<int:agent_id>/edit/', views.update_agent_view, name='edit_agent'), # update agent details
     path('agents/<int:agent_id>/delete/', views.delete_agent_view, name='delete_agent'), # delete agent
     path('agents/selection/', views.agent_selection_view, name='agent_selection'), # where the user whichever agent they're going to use
-
+    path('generate-content/<int:agent_id>/', views.generate_content_view, name='generate_content'),
     # path('agents/<int:agent_id>/chat/', views.chat_interface_view, name='agent_chat'), still need to work on this
 ]
