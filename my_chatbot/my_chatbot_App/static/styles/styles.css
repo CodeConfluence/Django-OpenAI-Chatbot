@@ -393,21 +393,35 @@ h1 {
   height: 36px;
 }
 
+.chatbot-main-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
 .chatbot-chat-wrapper {
   padding: 16px 8px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+  overflow-y: scroll;
 }
 
-.chatbot-chat-output-wrapper {
+.chatbot-chat-output-wrapper,
+.chatbot-user-output-wrapper {
   display: flex;
   gap: 8px;
 }
 
+.chatbot-user-output-wrapper {
+  align-self: flex-end;
+}
+
 .chatbot-chat-output-content,
-.chatbot-chat-output-titles {
+.chatbot-chat-output-titles,
+.chatbot-user-output-content {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -426,21 +440,31 @@ h1 {
   color: #0a0f11a2;
 }
 
-.chatbot-chat-message {
+.chatbot-chat-message,
+.chatbot-user-message {
   background-color: var(--primary-white-100);
   padding: 4px 12px;
   border-radius: 8px;
 }
 
-.chatbot-chat-message-content {
+.chatbot-user-message {
+  background-color: var(--primary-white-200);
+}
+
+.chatbot-chat-message-content,
+.chatbot-user-message-content {
   width: 25ch;
   line-height: 120%;
 }
 
+.chatbox-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .chatbot-chatbox-wrapper {
-  bottom: 30px;
-  position: fixed;
-  z-index: 15;
+  margin-bottom: 30px;
   align-self: center;
   background-color: var(--primary-blue-600);
   padding: 16px;
@@ -819,11 +843,13 @@ body.login-page::before {
     height: 64px;
   }
 
-  .chatbot-chat-output-wrapper {
+  .chatbot-chat-output-wrapper,
+  .chatbot-user-output-wrapper {
     gap: 12px;
   }
 
   .chatbot-chat-output-content,
+  .chatbot-user-output-content,
   .chatbot-chat-output-titles {
     gap: 16px;
   }
@@ -832,12 +858,13 @@ body.login-page::before {
     gap: 12px;
   }
 
-  .chatbot-chat-message {
-    background-color: var(--primary-white-100);
+  .chatbot-chat-message,
+  .chatbot-user-message {
     padding: 6px 16px;
   }
 
-  .chatbot-chat-message-content {
+  .chatbot-chat-message-content,
+  .chatbot-user-message-content {
     width: 40ch;
   }
 }
@@ -859,12 +886,13 @@ body.login-page::before {
     font-size: 1.125rem;
   }
 
-  .chatbot-chat-message {
-    background-color: var(--primary-white-100);
+  .chatbot-chat-message,
+  .chatbot-user-message {
     padding: 8px 24px;
   }
 
-  .chatbot-chat-message-content {
+  .chatbot-chat-message-content,
+  .chatbot-user-message-content {
     width: 65ch;
     font-size: 1rem;
   }
@@ -898,8 +926,8 @@ body.login-page::before {
   .recommended-agents-title {
     max-width: 35ch;
   }
-  .chatbot-chat-message {
-    background-color: var(--primary-white-100);
+  .chatbot-chat-message,
+  .chatbot-user-message {
     padding: 6px 16px;
   }
 
@@ -926,15 +954,7 @@ body.login-page::before {
     height: 100%;
   }
 
-  .chatbot-main-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-  }
-
   .chatbot-chat-wrapper {
-    overflow-y: scroll;
     height: 100%;
   }
 
@@ -942,14 +962,21 @@ body.login-page::before {
     width: 300px;
   }
 
-  .chatbot-chat-message-content {
+  .chatbot-chat-message-content,
+  .chatbot-user-message-content {
     width: 50ch;
     font-size: 1.125rem;
+  }
+
+  .chatbot-chatbox-wrapper {
+    position: static;
+    margin-bottom: 30px;
   }
 }
 
 @media (min-width: 1280px) {
-  .chatbot-chat-message-content {
+  .chatbot-chat-message-content,
+  .chatbot-user-message-content {
     width: 75ch;
   }
 
