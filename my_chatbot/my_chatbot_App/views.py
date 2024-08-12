@@ -11,9 +11,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.mixins import LoginRequiredMixin
+import os
+from django.utils.text import slugify
 
-from .models import Agent
-from .forms import AgentForm
+from .models import Agent, Resource
+from .forms import AgentForm, ResourceForm
 
 def register_view(request):
     if request.method == 'POST':
@@ -153,21 +155,6 @@ def generate_content_view(request):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @login_required
-def create_agent_view(request): # create a new agent
-   if request.method == 'POST':
-       form = AgentForm(request.POST, request.FILES)
-       if form.is_valid(): # save agent and go to agent list
-           agent = form.save(commit=False)
-           agent.creator = request.user
-           agent.save()
-           for f in request.FILES.getlist('resources'):
-               agent.resources.save(f.name, f)
-           return redirect('agent_list') # go to agent list
-   else:
-       form = AgentForm()
-   return render(request, 'agents/create_agent.html', {'form': form}) # go to create agent page
-
-@login_required
 def agent_list_view(request): # getting list of agents
    agents = Agent.objects.filter(creator=request.user)
    return render(request, 'agents/agent_list.html', {'agents': agents}) # render agent list
@@ -206,19 +193,36 @@ def agent_selection_view(request): # where the user selects which agent they're 
        'public_agents': public_agents,
    })
 
-def create_agent_view(request): 
+@login_required
+def create_agent_view(request):
     if request.method == 'POST':
-        form = AgentForm(request.POST, request.FILES)
-        if form.is_valid():
-            agent = form.save(commit=False)
+        agent_form = AgentForm(request.POST)
+        if agent_form.is_valid():
+            agent = agent_form.save(commit=False)
             agent.creator = request.user
             agent.save()
-            for f in request.FILES.getlist('resources'):
-                agent.resources.save(f.name, f)
-            return redirect('agent_list')
+            
+            # Handling file upload for resources
+            files = request.FILES.getlist('files')
+            for file in files:
+                # Extract the original file name and extension (learning reference)
+                original_name, extension = os.path.splitext(file.name)
+                # Create a new file name with the agent's name appended
+                new_name = f"{original_name}_{slugify(agent.name)}{extension}"
+                # Save the file with the new name
+                Resource.objects.create(agent=agent, title=new_name, file=file)
+
+            return redirect(reverse_lazy('profile'))
     else:
-        form = AgentForm()
-    return render(request, 'chatbotApp/create.html', {'form': form})
+        agent_form = AgentForm()
+        resource_form = ResourceForm()
+
+    context = {
+        'form': agent_form,
+        'resource_form': resource_form,
+    }
+
+    return render(request, 'chatbotApp/create.html', context)
 
 # @login_required
 # def chat_interface_view(request, agent_id):
