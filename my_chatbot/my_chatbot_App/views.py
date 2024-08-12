@@ -8,6 +8,8 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import make_password, check_password
 from .models import Agent
 from .forms import AgentForm
 
@@ -70,7 +72,42 @@ def home_view(request):
     return render(request, 'chatbotApp/home.html')
 
 def profile_view(request):
-    return render(request, 'accounts/profile.html')
+    user = request.user
+    context = {
+        'username': user.username,
+        'name': user.first_name,
+    }
+    return render(request, 'accounts/profile.html', context)
+
+@login_required
+def account_update_view(request):
+    if request.method == 'POST':
+        user = request.user
+
+        # Handle name and username updates
+        new_name = request.POST.get('name')
+        new_username = request.POST.get('username')
+        if new_name and new_name != user.first_name:
+            user.first_name = new_name
+        if new_username and new_username != user.username:
+            user.username = new_username
+        user.save()
+
+        # Handle password change
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        if current_password and new_password:
+            if check_password(current_password, user.password):
+                user.password = make_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)
+                return redirect('profile')
+            else:
+                error_message = "Invalid Current Password!"
+                context = {'error':error_message}
+                return render(request, 'accounts/profile.html', context)
+
+    return redirect('profile')
 
 @login_required
 def account_settings_view(request):
