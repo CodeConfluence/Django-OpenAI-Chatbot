@@ -10,6 +10,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import Agent
 from .forms import AgentForm
 
@@ -58,19 +60,23 @@ class CustomLoginView(LoginView):
         else:
             return render(request, self.template_name)
 
-class CustomLogoutView(LogoutView):
+
+class CustomLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'accounts/logout.html'
     next_page = reverse_lazy('login')
-    
-class CustomPasswordResetView(PasswordResetView):
+
+
+class CustomPasswordResetView(LoginRequiredMixin, PasswordResetView):
     template_name = 'registration/password_reset_form.html'
     email_template_name = 'registration/password_reset_email.html'
     subject_template_name = 'registration/password_reset_subject.txt'
     success_url = '/password_reset/done/'
 
+@login_required
 def home_view(request):
     return render(request, 'chatbotApp/home.html')
 
+@login_required
 def profile_view(request):
     user = request.user
     context = {
@@ -119,6 +125,32 @@ def account_delete_view(request):
         user.delete()
         return redirect('home')
     return render(request, 'accounts/account_delete_confirmation.html')
+
+# GOOGLE VERTEX AI (SHOULD PROBABLY CREATE A SEPERATE VIEW FILE)
+
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from decouple import config
+import google.generativeai as genai
+
+genai.configure(api_key=config('API_KEY'))
+
+model = genai.GenerativeModel('gemini-1.5-flash')
+
+@csrf_exempt
+def generate_content_view(request):
+    if request.method == "POST":
+        user_message = request.POST.get('message')
+
+        if not user_message:
+            return JsonResponse({"error": "No message provided"}, status=400)
+
+        chatbot_response = model.generate_content(user_message)
+
+        return JsonResponse({"response": chatbot_response})
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @login_required
 def create_agent_view(request): # create a new agent
