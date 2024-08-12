@@ -123,7 +123,7 @@ body {
   font-style: normal;
 }
 html {
-  font-family: 'Kollektif';
+  font-family: "Kollektif";
 }
 body {
   font-family: "Kollektif";
@@ -133,19 +133,24 @@ body {
   overflow-x: hidden;
 }
 
-input, textarea, button, select, label {
-  font-family: 'Kollektif'; 
+input,
+textarea,
+button,
+select,
+label {
+  font-family: "Kollektif";
 }
 
-input::placeholder, textarea::placeholder {
-  font-family: 'Kollektif';
+input::placeholder,
+textarea::placeholder {
+  font-family: "Kollektif";
 }
 
 h2 {
   font-size: 1.85rem;
 }
 
-input::placeholder{
+input::placeholder {
   font-size: 18px;
 }
 
@@ -411,21 +416,35 @@ h1 {
   height: 36px;
 }
 
+.chatbot-main-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
 .chatbot-chat-wrapper {
   padding: 16px 8px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+  overflow-y: scroll;
 }
 
-.chatbot-chat-output-wrapper {
+.chatbot-chat-output-wrapper,
+.chatbot-user-output-wrapper {
   display: flex;
   gap: 8px;
 }
 
+.chatbot-user-output-wrapper {
+  align-self: flex-end;
+}
+
 .chatbot-chat-output-content,
-.chatbot-chat-output-titles {
+.chatbot-chat-output-titles,
+.chatbot-user-output-content {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -444,21 +463,37 @@ h1 {
   color: #0a0f11a2;
 }
 
-.chatbot-chat-message {
+.chatbot-chat-message,
+.chatbot-user-message {
   background-color: var(--primary-white-100);
   padding: 4px 12px;
   border-radius: 8px;
 }
 
-.chatbot-chat-message-content {
+.chatbot-user-message {
+  background-color: var(--primary-white-200);
+}
+
+.chatbot-chat-message-content,
+.chatbot-user-message-content {
   width: 25ch;
+  text-wrap: wrap !important;
+  word-wrap: break;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  white-space: normal;
   line-height: 120%;
 }
 
+.chatbox-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .chatbot-chatbox-wrapper {
-  bottom: 30px;
-  position: fixed;
-  z-index: 15;
+  margin-bottom: 30px;
   align-self: center;
   background-color: var(--primary-blue-600);
   padding: 16px;
@@ -508,10 +543,6 @@ h1 {
 
 .chatbot-chatbox-input::placeholder {
   color: #eff4f6d2;
-}
-
-.chatbox-send-icon-inactive {
-  color: #eff4f628;
 }
 
 .chatbox-paperclip-icon,
@@ -671,7 +702,7 @@ body.login-page::before {
   display: block;
   margin-bottom: 5px;
   color: var(--primary-blue-900);
-  font-size: 21px
+  font-size: 21px;
 }
 
 .input-wrapper {
@@ -838,11 +869,13 @@ body.login-page::before {
     height: 64px;
   }
 
-  .chatbot-chat-output-wrapper {
+  .chatbot-chat-output-wrapper,
+  .chatbot-user-output-wrapper {
     gap: 12px;
   }
 
   .chatbot-chat-output-content,
+  .chatbot-user-output-content,
   .chatbot-chat-output-titles {
     gap: 16px;
   }
@@ -851,12 +884,13 @@ body.login-page::before {
     gap: 12px;
   }
 
-  .chatbot-chat-message {
-    background-color: var(--primary-white-100);
+  .chatbot-chat-message,
+  .chatbot-user-message {
     padding: 6px 16px;
   }
 
-  .chatbot-chat-message-content {
+  .chatbot-chat-message-content,
+  .chatbot-user-message-content {
     width: 40ch;
   }
 }
@@ -878,12 +912,13 @@ body.login-page::before {
     font-size: 1.125rem;
   }
 
-  .chatbot-chat-message {
-    background-color: var(--primary-white-100);
+  .chatbot-chat-message,
+  .chatbot-user-message {
     padding: 8px 24px;
   }
 
-  .chatbot-chat-message-content {
+  .chatbot-chat-message-content,
+  .chatbot-user-message-content {
     width: 65ch;
     font-size: 1rem;
   }
@@ -917,8 +952,8 @@ body.login-page::before {
   .recommended-agents-title {
     max-width: 35ch;
   }
-  .chatbot-chat-message {
-    background-color: var(--primary-white-100);
+  .chatbot-chat-message,
+  .chatbot-user-message {
     padding: 6px 16px;
   }
 
@@ -945,15 +980,7 @@ body.login-page::before {
     height: 100%;
   }
 
-  .chatbot-main-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-  }
-
   .chatbot-chat-wrapper {
-    overflow-y: scroll;
     height: 100%;
   }
 
@@ -961,14 +988,21 @@ body.login-page::before {
     width: 300px;
   }
 
-  .chatbot-chat-message-content {
+  .chatbot-chat-message-content,
+  .chatbot-user-message-content {
     width: 50ch;
     font-size: 1.125rem;
+  }
+
+  .chatbot-chatbox-wrapper {
+    position: static;
+    margin-bottom: 30px;
   }
 }
 
 @media (min-width: 1280px) {
-  .chatbot-chat-message-content {
+  .chatbot-chat-message-content,
+  .chatbot-user-message-content {
     width: 75ch;
   }
 
@@ -1038,20 +1072,21 @@ body.login-page::before {
   border-radius: 5px;
   font-size: 18px;
   font-family: "Kollektif";
-  color: var(--primary-text-color-0); 
+  color: var(--primary-text-color-0);
   transition: border-color 0.3s;
-  max-height: 450px; 
+  max-height: 450px;
   max-width: 100%;
 }
 
-#description, #instructions {
-  height: 150px; 
+#description,
+#instructions {
+  height: 150px;
 }
 
 .form-group input[type="text"]:focus,
 .form-group textarea:focus {
   border-color: var(--primary-blue-0);
-  outline: none; 
+  outline: none;
 }
 
 .btn {
@@ -1069,10 +1104,10 @@ body.login-page::before {
 }
 
 .create-agent-container h1 {
-  font-size: 30px; 
+  font-size: 30px;
 }
 
-p{
+p {
   font-size: 18px;
 }
 
@@ -1101,8 +1136,8 @@ p{
 .switch {
   position: relative;
   display: inline-block;
-  width: 50px; 
-  height: 28px; 
+  width: 50px;
+  height: 28px;
 }
 
 .switch input {
@@ -1119,18 +1154,18 @@ p{
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 22px; 
-  width: 22px;  
-  left: 3px;  
-  bottom: 3px;  
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
@@ -1142,11 +1177,11 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(22px); 
+  transform: translateX(22px);
 }
 
 .slider.round {
-  border-radius: 28px; 
+  border-radius: 28px;
 }
 
 .slider.round:before {
@@ -1177,7 +1212,7 @@ input:checked + .slider:before {
 }
 
 .btn-delete {
-  background-color: #d9534f; 
+  background-color: #d9534f;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -1187,7 +1222,7 @@ input:checked + .slider:before {
 }
 
 .cancel-delete {
-  background-color: #5cb85c; 
+  background-color: #5cb85c;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -1221,7 +1256,7 @@ input:checked + .slider:before {
 }
 
 .update-success-section .btn {
-  background-color: #5cb85c; 
+  background-color: #5cb85c;
   color: white;
   border: none;
   padding: 10px 20px;
