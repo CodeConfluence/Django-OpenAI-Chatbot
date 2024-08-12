@@ -3,12 +3,20 @@ from django.db import models
 from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(BASE_DIR, 'model_default_instructions.txt')
+
+try:
+    with open(file_path, 'r') as file:
+        instructions = file.read()
+except FileNotFoundError:
+    print(f"Error: The file {file_path} was not found.")
+    default_instructions = ""
 
 def upload_resource_path(instance, filename):
     return f'uploads/agents/{instance.agent.id}/{filename}'
-
-with open('path/to/model_default_instructions.txt', 'r') as file:
-    default_instructions = file.read()
 
 class Agent(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='agents')
