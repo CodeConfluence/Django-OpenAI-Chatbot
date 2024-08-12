@@ -134,6 +134,10 @@ LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Media files (Uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Email backend configuration for SendGrid
 
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'

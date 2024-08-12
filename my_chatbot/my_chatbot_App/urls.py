@@ -1,4 +1,7 @@
-from django.urls import path
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 from django.contrib.auth import views as auth_views
 
@@ -15,6 +18,7 @@ urlpatterns = [
         template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
     path('profile/', views.profile_view, name='profile'),
     path('profile/update/', views.account_update_view, name='account_update'),
+    path('profile/upload-image/', views.profile_image_upload, name='profile_image_upload'),
     path('profile/update/confirmation', views.account_update_confirmation_view, name='account_update_confirmation'),
     path('profile/account_delete', views.account_delete_view, name='account_delete'),
     path('agents/', views.agent_list_view, name='agent_list'), # list of agents
@@ -26,3 +30,6 @@ urlpatterns = [
 
     # path('agents/<int:agent_id>/chat/', views.chat_interface_view, name='agent_chat'), still need to work on this
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

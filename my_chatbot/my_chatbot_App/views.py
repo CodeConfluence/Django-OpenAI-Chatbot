@@ -14,7 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import os
 from django.utils.text import slugify
 from django.contrib.auth import logout
-
+from .models import Profile
 from .models import Agent, Resource
 from .forms import AgentForm, ResourceForm
 
@@ -108,6 +108,20 @@ def account_update_view(request):
     if request.method == 'POST':
         user = request.user
 
+        # Ensure profile exists
+        profile, created = Profile.objects.get_or_create(user=user)
+
+        # Handle profile image upload or removal
+        if 'remove_profile_picture' in request.POST:
+            # Remove the profile picture
+            if profile.image:
+                profile.image.delete()
+                profile.image = None
+        elif 'profile_image' in request.FILES:
+            profile.image = request.FILES['profile_image']
+        
+        profile.save()
+
         # Handle name and username updates
         new_name = request.POST.get('name')
         new_username = request.POST.get('username')
@@ -115,23 +129,31 @@ def account_update_view(request):
             user.first_name = new_name
         if new_username and new_username != user.username:
             user.username = new_username
-        user.save()
-
+        
         # Handle password change
         current_password = request.POST.get('current_password')
         new_password = request.POST.get('new_password')
         if current_password and new_password:
             if check_password(current_password, user.password):
-                user.password = make_password(new_password)
-                user.save()
+                user.set_password(new_password)
                 update_session_auth_hash(request, user)
-                return redirect('profile')
             else:
                 error_message = "Invalid Current Password!"
-                context = {'error':error_message}
+                context = {'error': error_message, 'name': user.first_name, 'username': user.username}
                 return render(request, 'accounts/profile.html', context)
 
+        user.save()
     return redirect('account_update_confirmation')
+
+@login_required
+def profile_image_upload(request):
+    if request.method == 'POST' and request.FILES.get('profile_image'):
+        user = request.user
+        if not hasattr(user, 'profile'):
+            Profile.objects.create(user=user)
+        user.profile.image = request.FILES['profile_image']
+        user.profile.save()
+    return redirect('profile')
 
 def account_update_confirmation_view(request):
     return render(request, 'accounts/account_updated_confirmation.html')
