@@ -92,7 +92,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 @font-face {
@@ -130,7 +130,6 @@ body {
   background-color: var(--background-color-light);
   padding: 0;
   margin: 0;
-  overflow-x: hidden;
 }
 
 input,
@@ -396,6 +395,15 @@ h1 {
   width: 200px;
 }
 
+.previous-agents-content-wrapper:hover,
+.recommended-agents-content-wrapper:hover {
+  background-color: var(--secondary-blue-0);
+}
+
+.currently-selected-agent {
+  background-color: var(--secondary-blue-0);
+}
+
 .recommended-agents-content-wrapper {
   display: flex;
   align-items: center;
@@ -458,6 +466,10 @@ h1 {
   margin: 0;
 }
 
+.chatbot-chat-agent-name-error {
+  color: #db4646;
+}
+
 .chatbot-chat-social-brain {
   font-size: 0.75rem;
   color: #0a0f11a2;
@@ -468,6 +480,10 @@ h1 {
   background-color: var(--primary-white-100);
   padding: 4px 12px;
   border-radius: 8px;
+}
+
+.chatbot-chat-message-error {
+  background-color: #db4646;
 }
 
 .chatbot-user-message {
@@ -556,6 +572,23 @@ h1 {
 .chatbox-send-icon:focus {
   outline: 2px solid var(--primary-blue-0);
   border-radius: 50%;
+}
+
+.previous-messages-divider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+.previous-messages-divisor {
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-black-200);
+}
+.previous-messages-text {
+  color: var(--primary-black-200);
+  text-wrap: nowrap;
 }
 
 /* Register page specific styles */
@@ -957,7 +990,7 @@ body.login-page::before {
     padding: 6px 16px;
   }
 
-  body .chatbot {
+  body.chatbot-page {
     display: flex;
     width: 100%;
     height: 100%;
