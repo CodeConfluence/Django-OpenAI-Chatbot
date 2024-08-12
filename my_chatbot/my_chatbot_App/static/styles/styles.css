@@ -132,7 +132,7 @@ input::placeholder, textarea::placeholder {
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: 1.85rem;
 }
 
 input::placeholder{
@@ -887,6 +887,7 @@ body.login-page::before {
 .create-agent-container {
   max-width: 800px;
   margin: 0 auto;
+  margin-top: 20px;
   padding: 30px;
   background-color: var(--primary-white-0);
   border-radius: 10px;
@@ -920,6 +921,12 @@ body.login-page::before {
   font-family: "Kollektif";
   color: var(--primary-text-color-0); 
   transition: border-color 0.3s;
+  max-height: 450px; 
+  max-width: 100%;
+}
+
+#description, #instructions {
+  height: 150px; 
 }
 
 .form-group input[type="text"]:focus,
@@ -948,4 +955,85 @@ body.login-page::before {
 
 p{
   font-size: 18px;
+}
+
+.visibility-section {
+  margin-bottom: 30px;
+}
+
+.visibility-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.visibility-text {
+  font-size: 19px;
+}
+
+.visibility-description {
+  font-size: 17px;
+  color: var(--secondary-text-color-500);
+  margin: 10px 0 20px 0;
+}
+
+/* Toggle Switch Styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px; 
+  height: 28px; 
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px; 
+  width: 22px;  
+  left: 3px;  
+  bottom: 3px;  
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-blue-0);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--primary-blue-0);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px); 
+}
+
+.slider.round {
+  border-radius: 28px; 
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.form-group:not(:last-child) {
+  margin-bottom: 30px;
 }
