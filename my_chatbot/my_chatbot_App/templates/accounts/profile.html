@@ -21,7 +21,8 @@
                 </ul>
             </aside>
             <div class="main-content">
-                <div id="account" class="profile-section">
+                <form method="POST" action="{% url 'account_update' %}" id="account" class="profile-section">
+                    {% csrf_token %}
                     <h2>Account</h2>
                     <div class="profile-picture">
                         <img src="{% static 'images/user.png' %}" alt="Edit" class="edit-icon">
@@ -31,16 +32,16 @@
                     
                     <div class="form-row">
                         <div class="input-group">
-                            <label>Name</label>
+                            <label>First Name</label>
                             <div class="input-wrapper">
-                                <input type="text" name="name" placeholder="Name">
+                                <input type="text" name="name" placeholder="Name" value="{{ name }}">
                             </div>
                         </div>
                         
                         <div class="input-group">
                             <label>Username</label>
                             <div class="input-wrapper">
-                                <input type="text" name="Username" placeholder="Username">
+                                <input type="text" name="Username" placeholder="Username" value="{{ username }}">
                             </div>
                         </div>
                     </div>
@@ -65,12 +66,16 @@
                             </div>
                         </div>
                     </div>
-                    
+                    {% if error %}
+                    <p class="error">{{ error }}</p>
+                    {% endif %}
                     <div class="button-group">
-                        <button class="btn save-changes">Save Changes</button>
-                        <button class="btn btn-delete delete-account">Delete Account</button>
+                        <button type="submit" class="btn save-changes">Save Changes</button>
+                        <a href="{% url 'account_delete' %}">
+                            <button type="button" class="btn btn-delete delete-account">Delete Account</button>
+                        </a>
                     </div>
-                </div>
+                </form>
                 
                 <div id="agent" class="profile-section" style="display: none;">
                     <h2>Agents</h2>
