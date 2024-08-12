@@ -1037,3 +1037,75 @@ input:checked + .slider:before {
 .form-group:not(:last-child) {
   margin-bottom: 30px;
 }
+
+/* ACCOUNT DELETION CONFIRMATION */
+.delete-confirmation-section {
+  text-align: center;
+  padding: 40px;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.delete-confirmation-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.delete-confirmation-section p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.btn-delete {
+  background-color: #d9534f; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.cancel-delete {
+  background-color: #5cb85c; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ACCOUNT UPDATED CONFIRMATION */
+.update-success-section {
+  text-align: center;
+  padding: 40px;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+}
+
+.update-success-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.update-success-section p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.update-success-section .btn {
+  background-color: #5cb85c; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}

@@ -12,8 +12,8 @@ urlpatterns = [
         template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
     path('profile/', views.profile_view, name='profile'),
     path('profile/update/', views.account_update_view, name='account_update'),
-    path('profile/account_delete', views.account_delete_view, 
-         name='account_delete'),
+    path('profile/update/confirmation', views.account_update_confirmation_view, name='account_update_confirmation'),
+    path('profile/account_delete', views.account_delete_view, name='account_delete'),
     path('agents/', views.agent_list_view, name='agent_list'), # list of agents
     path('agents/create/', views.create_agent_view, name='create_agent'), # create a new agent
     path('agents/<int:agent_id>/', views.agent_detail_view, name='agent_detail'), # view agent details

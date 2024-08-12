@@ -107,11 +107,10 @@ def account_update_view(request):
                 context = {'error':error_message}
                 return render(request, 'accounts/profile.html', context)
 
-    return redirect('profile')
+    return redirect('account_update_confirmation')
 
-@login_required
-def account_settings_view(request):
-    return render(request, 'accounts/account_settings.html')
+def account_update_confirmation_view(request):
+    return render(request, 'accounts/account_updated_confirmation.html')
 
 @login_required
 def account_delete_view(request):
