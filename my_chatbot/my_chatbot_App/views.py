@@ -96,9 +96,10 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from google.cloud import aiplatform
+from decouple import config
 
 # Initialize the Vertex AI client
-PROJECT_ID = ""
+PROJECT_ID = config('PROJECT_ID')
 LOCATION = "us-central1"  
 MODEL_NAME = "projects/{}/locations/{}/models/{}".format(PROJECT_ID, LOCATION, "gemini-1.5-flash-001")
 
@@ -106,7 +107,7 @@ aiplatform.init(project=PROJECT_ID, location=LOCATION)
 endpoint = aiplatform.Endpoint(endpoint_name=MODEL_NAME)
 
 @csrf_exempt
-def chat_view(request):
+def generate_content_view(request):
     if request.method == "POST":
         user_message = request.POST.get('message')
 
@@ -124,7 +125,7 @@ def chat_view(request):
 
         return JsonResponse({"response": chatbot_response})
 
-    return render(request, 'chat.html')
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @login_required
 def create_agent_view(request): # create a new agent
