@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0"
+      content="width=device-width, initial-scale=1"
     />
     <title>SocialBrain</title>
     {% load static %}
@@ -19,363 +19,365 @@
     />
   </head>
   <body>
-    <header>
-      <nav class="chatbot-navigation">
-        <!-- inline menu svg -->
-        <svg
-          id="header-hamburger-menu"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#ffffff"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          role="button"
-          focusable="true"
-          aria-label="Expand to view menu options"
-          tabindex="1"
-        >
-          <title id="hamburger-menu-titleID">Hamburger menu button</title>
-          <desc id="hamburger-menu-descID">
-            Icon representing a toggle for the navigation menu and agents for
-            the site
-          </desc>
-          <line
-            x1="3"
-            y1="12"
-            x2="21"
-            y2="12"
-          ></line>
-          <line
-            x1="3"
-            y1="6"
-            x2="21"
-            y2="6"
-          ></line>
-          <line
-            x1="3"
-            y1="18"
-            x2="21"
-            y2="18"
-          ></line>
-        </svg>
-        <!---->
-        <!-- inline profile svg -->
-        <div class="header-profile-wrapper">
-          <a href="{% url 'profile' %}">
-            <svg
-              id="header-profile-menu"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#ffffff"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-user"
-              role="button"
-              focusable="true"
-              aria-label="Expand to view profile options"
-              tabindex="1"
-            >
-              <title id="user-profile-titleID">Profile dropdown menu</title>
-              <desc id="user-profile-descID">
-                Icon representing a dropdown for profile options
-              </desc>
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle
-                cx="12"
-                cy="7"
-                r="4"
-              ></circle>
-            </svg>
-          </a>
-        </div>
-      </nav>
-
-      <div
-        class="chatbot-aside-wrapper chatbot-aside-menu-wrapper-inactive"
-        id="header-aside-menu-wrapper"
+    <div
+      class="chatbot-aside-wrapper chatbot-aside-menu-wrapper-inactive"
+      id="header-aside-menu-wrapper"
+    >
+      <aside
+        class="chatbot-aside-menu"
+        id="chatbot-aside-menu"
       >
-        <aside
-          class="chatbot-aside-menu"
-          id="chatbot-aside-menu"
-        >
-          <div class="aside-menu-actions-wrapper">
-            <!-- exit menu svg -->
-            <svg
-              id="aside-menu-exit"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#ffffff"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              role="button"
-              focusable="true"
-              aria-label="Exit aside menu"
-              tabindex="1"
-            >
-              <title id="aside-exit-titleID">Exit aside menu</title>
-              <desc id="aside-exit-descID">
-                Icon representing a 'exit' for the aside menu
-              </desc>
-              <line
-                x1="18"
-                y1="6"
-                x2="6"
-                y2="18"
-              ></line>
-              <line
-                x1="6"
-                y1="6"
-                x2="18"
-                y2="18"
-              ></line>
-            </svg>
-            <!---->
+        <div class="aside-menu-actions-wrapper">
+          <!-- exit menu svg -->
+          <svg
+            id="aside-menu-exit"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            role="button"
+            focusable="true"
+            aria-label="Exit aside menu"
+            tabindex="1"
+          >
+            <title id="aside-exit-titleID">Exit aside menu</title>
+            <desc id="aside-exit-descID">
+              Icon representing a 'exit' for the aside menu
+            </desc>
+            <line
+              x1="18"
+              y1="6"
+              x2="6"
+              y2="18"
+            ></line>
+            <line
+              x1="6"
+              y1="6"
+              x2="18"
+              y2="18"
+            ></line>
+          </svg>
+          <!---->
 
-            <!-- create agent svg -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#ffffff"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              role="button"
-              focusable="true"
-              aria-label="Exit aside menu"
-              tabindex="1"
-            >
-              <title id="aside-create-titleID">Create new agent</title>
-              <desc id="aside-create-descID">
-                Icon representing a button to create a new agent
-              </desc>
-              <path
-                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-              ></path>
-              <path
-                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-              ></path>
-            </svg>
-            <!---->
-          </div>
+          <!-- create agent svg -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            role="button"
+            focusable="true"
+            aria-label="Exit aside menu"
+            tabindex="1"
+          >
+            <title id="aside-create-titleID">Create new agent</title>
+            <desc id="aside-create-descID">
+              Icon representing a button to create a new agent
+            </desc>
+            <path
+              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+            ></path>
+            <path
+              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+            ></path>
+          </svg>
+          <!---->
+        </div>
 
-          <img
-            src="{% static 'images/socialbrain.png' %}"
-            alt="SocialBrain.ai Logo"
-            class="logo"
-            width="75"
-            height="75"
-          />
-
-          <div class="aside-menu-searchbar">
-            <!-- search icon svg -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#000000"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              role="button"
-              focusable="true"
-              aria-label="Search agents"
-              tabindex="1"
-            >
-              <title id="aside-searchbar-titleID">Search query button</title>
-              <desc id="aside-searchbar-descID">
-                Icon representing a button to query results
-              </desc>
-              <circle
-                cx="11"
-                cy="11"
-                r="8"
-              ></circle>
-              <line
-                x1="21"
-                y1="21"
-                x2="16.65"
-                y2="16.65"
-              ></line>
-            </svg>
-            <!---->
-            <form>
-              <input
-                placeholder="Search Agents"
-                type="text"
-                id="aside-search-bar"
-                class="aside-search-bar"
-              />
-            </form>
-          </div>
-
-          <div class="aside-previous-agents-wrapper">
-            <p class="aside-previous-agents-text">My Agents</p>
-
-            <div class="previous-agents-cards-wrapper">
-              <div class="previous-agents-content-wrapper">
-                <p class="previous-agents-title">Test Agent</p>
-              </div>
-
-              <div class="previous-agents-content-wrapper">
-                <p class="previous-agents-title">Test Agent</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="aside-recommended-agents-wrapper">
-            <p class="aside-recommended-agents-text">Recommended Agents</p>
-
-            <div class="recommended-agents-cards-wrapper">
-              <div class="recommended-agents-content-wrapper">
-                <img
-                  class="recommended-agents-icon"
-                  src="{% static 'images/amazon.svg' %}"
-                  alt="Amazon's logo"
-                />
-                <p class="recommended-agents-title">Amazon</p>
-              </div>
-
-              <div class="recommended-agents-content-wrapper">
-                <img
-                  class="recommended-agents-icon"
-                  src="{% static 'images/youtube.svg' %}"
-                  alt="YouTube's logo"
-                />
-                <p class="recommended-agents-title">YouTube</p>
-              </div>
-
-              <div class="recommended-agents-content-wrapper">
-                <img
-                  class="recommended-agents-icon"
-                  src="{% static 'images/discord.svg' %}"
-                  alt="Discord's logo"
-                />
-                <p class="recommended-agents-title">Discord</p>
-              </div>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </header>
-
-    <main class="chatbot-chat-wrapper">
-      <!-- Placeholder message -->
-      <div class="chatbot-chat-output-wrapper">
         <img
-          src="{% static 'images/Icon.png' %}"
+          src="{% static 'images/socialbrain.png' %}"
           alt="SocialBrain.ai Logo"
-          class="chatbot-chat-social-brain-icon"
-          width="36"
-          height="36"
+          class="logo"
+          width="75"
+          height="75"
         />
 
-        <div class="chatbot-chat-output-content">
-          <div class="chatbot-chat-output-titles">
-            <p class="chatbot-chat-social-brain">Social Brain</p>
-            <p class="chatbot-chat-agent-name">Amazon</p>
-          </div>
-          <!-- This should be dynamic and based on the current Agent name -->
-          <div class="chatbot-chat-message">
-            <p class="chatbot-chat-message-content">
-              Hello! I see you're experiencing an issue with your Amazon Prime
-              membership. I&apos;m here to help. Could you please provide more
-              details about the problem you're encountering? Whether it's
-              related to billing, access to Prime benefits, or anything else,
-              I'll do my best to guide you through resolving it.
-            </p>
-            <!-- This should be dynamic and based on the output of the agent -->
+        <div class="aside-menu-searchbar">
+          <!-- search icon svg -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            role="button"
+            focusable="true"
+            aria-label="Search agents"
+            tabindex="1"
+          >
+            <title id="aside-searchbar-titleID">Search query button</title>
+            <desc id="aside-searchbar-descID">
+              Icon representing a button to query results
+            </desc>
+            <circle
+              cx="11"
+              cy="11"
+              r="8"
+            ></circle>
+            <line
+              x1="21"
+              y1="21"
+              x2="16.65"
+              y2="16.65"
+            ></line>
+          </svg>
+          <!---->
+          <form>
+            <input
+              placeholder="Search Agents"
+              type="text"
+              id="aside-search-bar"
+              class="aside-search-bar"
+            />
+          </form>
+        </div>
+
+        <div class="aside-previous-agents-wrapper">
+          <p class="aside-previous-agents-text">My Agents</p>
+
+          <div class="previous-agents-cards-wrapper">
+            <div class="previous-agents-content-wrapper">
+              <p class="previous-agents-title">Test Agent</p>
+            </div>
+
+            <div class="previous-agents-content-wrapper">
+              <p class="previous-agents-title">Test Agent</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- chat box -->
-      <div class="chatbot-chatbox-wrapper">
-        <!-- paperclip svg -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#ffffff"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          role="button"
-          focusable="true"
-          aria-label="Search agents"
-          tabindex="1"
-          class="chatbox-paperclip-icon"
-        >
-          <title id="chatbot-paperclip-titleID">
-            Paperclip icon as a button
-          </title>
-          <desc id="chatbot-paperclip-descID">
-            Paperclip icon to symbolize 'paste' or 'files'
-          </desc>
-          <path
-            d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"
-          ></path>
-        </svg>
-        <!---->
+        <div class="aside-recommended-agents-wrapper">
+          <p class="aside-recommended-agents-text">Recommended Agents</p>
 
-        <textarea
-          placeholder="Chat with custom Agent"
-          class="chatbot-chatbox-input"
-          tabindex="0"
-          dir="auto"
-          rows="1"
-        ></textarea>
+          <div class="recommended-agents-cards-wrapper">
+            <div class="recommended-agents-content-wrapper">
+              <img
+                class="recommended-agents-icon"
+                src="{% static 'images/amazon.svg' %}"
+                alt="Amazon's logo"
+              />
+              <p class="recommended-agents-title">Amazon</p>
+            </div>
 
-        <!-- send svg -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#ffffff"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          role="button"
-          focusable="true"
-          aria-label="Search agents"
-          tabindex="1"
-          class="chatbox-send-icon-inactive chatbox-send-icon"
-        >
-          <title id="chatbot-send-titleID">Mail icon as a button</title>
-          <desc id="chatbot-send-descID">
-            Send or mail icon to symbolize sending a message
-          </desc>
-          <line
-            x1="22"
-            y1="2"
-            x2="11"
-            y2="13"
-          ></line>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-        </svg>
-        <!---->
-      </div>
-    </main>
+            <div class="recommended-agents-content-wrapper">
+              <img
+                class="recommended-agents-icon"
+                src="{% static 'images/youtube.svg' %}"
+                alt="YouTube's logo"
+              />
+              <p class="recommended-agents-title">YouTube</p>
+            </div>
+
+            <div class="recommended-agents-content-wrapper">
+              <img
+                class="recommended-agents-icon"
+                src="{% static 'images/discord.svg' %}"
+                alt="Discord's logo"
+              />
+              <p class="recommended-agents-title">Discord</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="chatbot-main-wrapper">
+      <header>
+        <nav class="chatbot-navigation">
+          <!-- inline menu svg -->
+          <svg
+            id="header-hamburger-menu"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            role="button"
+            focusable="true"
+            aria-label="Expand to view menu options"
+            tabindex="1"
+          >
+            <title id="hamburger-menu-titleID">Hamburger menu button</title>
+            <desc id="hamburger-menu-descID">
+              Icon representing a toggle for the navigation menu and agents for
+              the site
+            </desc>
+            <line
+              x1="3"
+              y1="12"
+              x2="21"
+              y2="12"
+            ></line>
+            <line
+              x1="3"
+              y1="6"
+              x2="21"
+              y2="6"
+            ></line>
+            <line
+              x1="3"
+              y1="18"
+              x2="21"
+              y2="18"
+            ></line>
+          </svg>
+          <!---->
+          <!-- inline profile svg -->
+          <div class="header-profile-wrapper">
+            <a href="{% url 'profile' %}">
+              <svg
+                id="header-profile-menu"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ffffff"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-user"
+                role="button"
+                focusable="true"
+                aria-label="Expand to view profile options"
+                tabindex="1"
+              >
+                <title id="user-profile-titleID">Profile dropdown menu</title>
+                <desc id="user-profile-descID">
+                  Icon representing a dropdown for profile options
+                </desc>
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle
+                  cx="12"
+                  cy="7"
+                  r="4"
+                ></circle>
+              </svg>
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="chatbot-chat-wrapper">
+        <!-- Placeholder message -->
+        <div class="chatbot-chat-output-wrapper">
+          <img
+            src="{% static 'images/Icon.png' %}"
+            alt="SocialBrain.ai Logo"
+            class="chatbot-chat-social-brain-icon"
+            width="36"
+            height="36"
+          />
+
+          <div class="chatbot-chat-output-content">
+            <div class="chatbot-chat-output-titles">
+              <p class="chatbot-chat-social-brain">Social Brain</p>
+              <p class="chatbot-chat-agent-name">Amazon</p>
+            </div>
+            <!-- This should be dynamic and based on the current Agent name -->
+            <div class="chatbot-chat-message">
+              <p class="chatbot-chat-message-content">
+                Hello! I see you're experiencing an issue with your Amazon Prime
+                membership. I&apos;m here to help. Could you please provide more
+                details about the problem you're encountering? Whether it's
+                related to billing, access to Prime benefits, or anything else,
+                I'll do my best to guide you through resolving it.
+              </p>
+              <!-- This should be dynamic and based on the output of the agent -->
+            </div>
+          </div>
+        </div>
+
+        <!-- chat box -->
+        <div class="chatbot-chatbox-wrapper">
+          <!-- paperclip svg -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            role="button"
+            focusable="true"
+            aria-label="Search agents"
+            tabindex="1"
+            class="chatbox-paperclip-icon"
+          >
+            <title id="chatbot-paperclip-titleID">
+              Paperclip icon as a button
+            </title>
+            <desc id="chatbot-paperclip-descID">
+              Paperclip icon to symbolize 'paste' or 'files'
+            </desc>
+            <path
+              d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"
+            ></path>
+          </svg>
+          <!---->
+
+          <textarea
+            placeholder="Chat with custom Agent"
+            class="chatbot-chatbox-input"
+            tabindex="0"
+            dir="auto"
+            rows="1"
+          ></textarea>
+
+          <!-- send svg -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            role="button"
+            focusable="true"
+            aria-label="Search agents"
+            tabindex="1"
+            class="chatbox-send-icon-inactive chatbox-send-icon"
+          >
+            <title id="chatbot-send-titleID">Mail icon as a button</title>
+            <desc id="chatbot-send-descID">
+              Send or mail icon to symbolize sending a message
+            </desc>
+            <line
+              x1="22"
+              y1="2"
+              x2="11"
+              y2="13"
+            ></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          <!---->
+        </div>
+      </main>
+    </div>
 
     <script>
       // vars
