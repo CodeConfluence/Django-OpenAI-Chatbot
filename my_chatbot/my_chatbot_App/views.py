@@ -98,7 +98,7 @@ from django.views.decorators.csrf import csrf_exempt
 from google.cloud import aiplatform
 
 # Initialize the Vertex AI client
-PROJECT_ID = "verdant-coyote-432222-u6"
+PROJECT_ID = ""
 LOCATION = "us-central1"  
 MODEL_NAME = "projects/{}/locations/{}/models/{}".format(PROJECT_ID, LOCATION, "gemini-1.5-flash-001")
 
