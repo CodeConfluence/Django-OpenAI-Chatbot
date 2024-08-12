@@ -18,7 +18,7 @@
       href="{% static 'styles/styles.css' %}"
     />
   </head>
-  <body>
+  <body class="chatbot">
     <div
       class="chatbot-aside-wrapper chatbot-aside-menu-wrapper-inactive"
       id="header-aside-menu-wrapper"
@@ -146,21 +146,21 @@
           </form>
         </div>
 
-          <div class="aside-previous-agents-wrapper">
-            <p class="aside-previous-agents-text">My Agents</p>
-        
-            <div class="previous-agents-cards-wrapper">
-                {% for agent in agents %}
-                <div class="previous-agents-content-wrapper">
-                    <p class="previous-agents-title">{{ agent.name }}</p>
-                </div>
-                {% empty %}
-                <div class="previous-agents-content-wrapper">
-                    <p class="previous-agents-title">No agents found.</p>
-                </div>
-                {% endfor %}
+        <div class="aside-previous-agents-wrapper">
+          <p class="aside-previous-agents-text">My Agents</p>
+
+          <div class="previous-agents-cards-wrapper">
+            {% for agent in agents %}
+            <div class="previous-agents-content-wrapper">
+              <p class="previous-agents-title">{{ agent.name }}</p>
             </div>
+            {% empty %}
+            <div class="previous-agents-content-wrapper">
+              <p class="previous-agents-title">No agents found.</p>
+            </div>
+            {% endfor %}
           </div>
+        </div>
 
         <div class="aside-recommended-agents-wrapper">
           <p class="aside-recommended-agents-text">Recommended Agents</p>
