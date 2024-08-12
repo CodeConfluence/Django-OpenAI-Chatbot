@@ -73,8 +73,16 @@ class CustomPasswordResetView(LoginRequiredMixin, PasswordResetView):
     subject_template_name = 'registration/password_reset_subject.txt'
     success_url = '/password_reset/done/'
 
+
 def home_view(request):
-    agents = Agent.objects.filter(creator=request.user)
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        # User is authenticated, retrieve agents associated with the user
+        agents = Agent.objects.filter(creator=request.user)
+    else:
+        # User is not authenticated, set agents to None or an empty list
+        agents = None
+
     context = {
         'agents': agents,
     }
