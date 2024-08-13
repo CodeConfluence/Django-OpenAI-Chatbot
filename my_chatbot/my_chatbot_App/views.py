@@ -183,14 +183,27 @@ def generate_content_view(request, agent_name):
     model=genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     system_instruction=agent.instructions)
+
+    directory_path = f"media/uploads/agents/{agent.id}/"
     
+    files = os.listdir(directory_path)
+    
+    if not files:
+        return JsonResponse({"error": "No files found in the directory"}, status=400)
+    
+    file_path = os.path.join(directory_path, files[0])
+    
+    knowledge_base_file = genai.upload_file(path=file_path, display_name=f"Agent '{agent.name}' Knowledge Base PDF") 
+
     if request.method == "POST":
         user_message = request.POST.get('message')
 
         if not user_message:
             return JsonResponse({"error": "No message provided"}, status=400)
 
-        chatbot_response = model.generate_content(user_message)
+        modified_user_message = f"Using this knowledge base in the file, respond to the user message: {user_message}"
+
+        chatbot_response = model.generate_content([knowledge_base_file, modified_user_message])
         
         return JsonResponse({"response": chatbot_response.text})
 
@@ -285,9 +298,3 @@ def delete_agent_view(request, agent_id):
        agent.delete()
        return redirect('profile')
    return render(request, 'chatbotApp/agent_delete_confirmation.html', {'agent': agent}) # go back to the delete agent page
-
-# @login_required
-# def chat_interface_view(request, agent_id):
-#   agent = get_object_or_404(Agent, id=agent_id)
-   #return render(request, 'chatbotApp/chat_interface.html', {'agent': agent})
-#need to work on this
