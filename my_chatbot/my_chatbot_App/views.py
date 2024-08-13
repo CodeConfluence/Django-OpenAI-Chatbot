@@ -231,6 +231,14 @@ def agent_selection_view(request): # where the user selects which agent they're 
 @login_required
 def create_agent_view(request):
     if request.method == 'POST':
+
+        agent_name = request.POST.get('name')
+        user_agent_name = Agent.objects.filter(name=agent_name)
+        if user_agent_name:
+            error_message = f"Agent with name '{agent_name}' already exists!"
+            context = {'error':error_message}
+            return render(request, 'chatbotApp/create.html', context) 
+
         agent_form = AgentForm(request.POST)
         if agent_form.is_valid():
             agent = agent_form.save(commit=False)
@@ -255,7 +263,7 @@ def create_agent_view(request):
                 resource.save()
 
             return redirect(reverse_lazy('profile'))
-
+        
     return render(request, 'chatbotApp/create.html')
 
 @login_required
@@ -263,6 +271,18 @@ def update_agent_view(request, agent_id):
     agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
     resource, created = Resource.objects.get_or_create(agent=agent)
     if request.method == 'POST':
+
+        agent_name = request.POST.get('name')
+        user_agent_name = Agent.objects.filter(name=agent_name)
+        if user_agent_name:
+            error_message = f"Agent with name '{agent_name}' already exists!"
+            context = {
+                'error':error_message,
+                'agent': agent,
+                'resource':resource,
+                }
+            return render(request, 'chatbotApp/edit.html', context)
+        
         agent_form = AgentForm(request.POST, instance=agent)
         if agent_form.is_valid():
             agent = agent_form.save(commit=False)

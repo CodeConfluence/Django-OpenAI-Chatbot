@@ -9,6 +9,9 @@
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" placeholder="Name your agent" required>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
         </div>
         <div class="form-group">
             <label for="description">Description</label>
