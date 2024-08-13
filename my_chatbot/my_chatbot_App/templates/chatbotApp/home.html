@@ -658,7 +658,7 @@
           //   .split("=")[1];
 
           const response = await fetch(
-            `/generate-content/${test || "new_agent"}/`,
+            `/generate-content/${agentName || "new_agent"}/`,
             {
               method: "POST",
               headers: {
@@ -698,6 +698,8 @@
             "An Error has occurred, please try to generate a response again!";
 
           addAgentMessage(errorTitle, errorMessage, true);
+
+          scrollToBottom();
 
           const queryParam = getQueryParameters();
 
