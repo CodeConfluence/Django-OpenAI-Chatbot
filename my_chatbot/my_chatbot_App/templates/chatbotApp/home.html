@@ -386,6 +386,10 @@
         ".previous-agents-content-wrapper"
       );
 
+      const recommendedAgents = document.querySelectorAll(
+        ".recommended-agents-content-wrapper"
+      );
+
       // event listeners
       window.onload = handleChatChange();
 
@@ -415,6 +419,10 @@
       sendMessage.addEventListener("click", addUserMessage);
 
       agents.forEach((element) =>
+        element.addEventListener("click", handleActiveAgent)
+      );
+
+      recommendedAgents.forEach((element) =>
         element.addEventListener("click", handleActiveAgent)
       );
 
@@ -480,9 +488,15 @@
           element.classList.remove("currently-selected-agent")
         );
 
+        recommendedAgents.forEach((element) =>
+          element.classList.remove("currently-selected-agent")
+        );
+
         this.classList.add("currently-selected-agent");
 
-        const currentAgent = this.children[0].textContent.toLowerCase();
+        const currentAgent =
+          this.children[0].textContent.toLowerCase() ||
+          this.children[1].textContent.toLowerCase();
 
         const params = new URLSearchParams(window.location.search);
         params.set("agent", currentAgent);
@@ -589,13 +603,16 @@
             .slice(queryString.search(/agent/i))
             .split("=")[1];
 
-          const response = await fetch(`/generate-content/${agentId || ""}/`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: postData.toString(),
-          });
+          const response = await fetch(
+            `/generate-content/${agentId || "new-agent"}/`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: postData.toString(),
+            }
+          );
 
           if (!response.ok)
             throw Error(
