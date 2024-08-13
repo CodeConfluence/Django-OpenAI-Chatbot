@@ -226,14 +226,20 @@ def create_agent_view(request):
             agent.save()
             
             # Handling file upload for resources
-            files = request.FILES.getlist('files')
-            for file in files:
-                # Extract the original file name and extension (learning reference)
-                original_name, extension = os.path.splitext(file.name)
-                # Create a new file name with the agent's name appended
-                new_name = f"{original_name}_{slugify(agent.name)}{extension}"
-                # Save the file with the new name
-                Resource.objects.create(agent=agent, title=new_name, file=file)
+            resource_form = ResourceForm(request.POST, request.FILES)
+            if resource_form.is_valid():
+                resource = resource_form.save(commit=False)
+                resource.agent = agent
+                if 'file' in request.FILES:
+                    uploaded_file = request.FILES['file']
+                    original_name, extension = os.path.splitext(uploaded_file.name)
+                    new_name = f"{original_name}_{slugify(agent.name)}{extension}"
+                    
+                    resource.save()
+                    # Save the file with the new name
+                    resource.file.save(new_name, uploaded_file)
+                    resource.title = new_name
+                resource.save()
 
             return redirect(reverse_lazy('profile'))
 
@@ -242,6 +248,7 @@ def create_agent_view(request):
 @login_required
 def update_agent_view(request, agent_id):
     agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+    resource, created = Resource.objects.get_or_create(agent=agent)
     if request.method == 'POST':
         agent_form = AgentForm(request.POST, instance=agent)
         if agent_form.is_valid():
@@ -249,19 +256,24 @@ def update_agent_view(request, agent_id):
             agent.user_defined_instructions = agent_form.cleaned_data.get('instructions')
             agent.save()
             
-            files = request.FILES.getlist('files')
-            for file in files:
-                # Extract the original file name and extension (learning reference)
-                original_name, extension = os.path.splitext(file.name)
-                # Create a new file name with the agent's name appended
-                new_name = f"{original_name}_{slugify(agent.name)}{extension}"
-                # Save the file with the new name
-                Resource.objects.update(title=new_name, file=file)
+            resource_form = ResourceForm(request.POST, request.FILES, instance=resource)
+            if resource_form.is_valid():
+                resource = resource_form.save(commit=False)
+                if 'file' in request.FILES:
+                    uploaded_file = request.FILES['file']
+                    original_name, extension = os.path.splitext(uploaded_file.name)
+                    new_name = f"{original_name}_{slugify(agent.name)}{extension}"
+                    
+                    resource.file.save(new_name, uploaded_file)
+                    resource.title = new_name
+                resource.agent = agent
+                resource.save()
             
             return redirect(reverse_lazy('profile'))
         
     context = {
         'agent': agent,
+        'resource':resource,
     }
 
     return render(request, 'chatbotApp/edit.html', context)
