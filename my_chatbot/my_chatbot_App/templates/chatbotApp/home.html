@@ -246,21 +246,68 @@
                   r="4"
                 ></circle>
               </svg>
-              <div id="profileDropdown" class="dropdown-content">
-                <a href="{% url 'profile' %}" class="dropdown-item">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              <div
+                id="profileDropdown"
+                class="dropdown-content"
+              >
+                <a
+                  href="{% url 'profile' %}"
+                  class="dropdown-item"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="3"
+                    ></circle>
+                    <path
+                      d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                    ></path>
                   </svg>
                   Account Settings
                 </a>
-                <form action="{% url 'logout' %}" method="post" id="logout-form">
+                <form
+                  action="{% url 'logout' %}"
+                  method="post"
+                  id="logout-form"
+                >
                   {% csrf_token %}
-                  <a href="javascript:void(0);" onclick="document.getElementById('logout-form').submit();" class="dropdown-item logout-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <a
+                    href="javascript:void(0);"
+                    onclick="document.getElementById('logout-form').submit();"
+                    class="dropdown-item logout-item"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="icon"
+                    >
                       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                       <polyline points="16 17 21 12 16 7"></polyline>
-                      <line x1="21" y1="12" x2="9" y2="12"></line>
+                      <line
+                        x1="21"
+                        y1="12"
+                        x2="9"
+                        y2="12"
+                      ></line>
                     </svg>
                     Log Out
                   </a>
@@ -388,6 +435,10 @@
         ".previous-agents-content-wrapper"
       );
 
+      const recommendedAgents = document.querySelectorAll(
+        ".recommended-agents-content-wrapper"
+      );
+
       // event listeners
       window.onload = handleChatChange();
 
@@ -417,6 +468,10 @@
       sendMessage.addEventListener("click", addUserMessage);
 
       agents.forEach((element) =>
+        element.addEventListener("click", handleActiveAgent)
+      );
+
+      recommendedAgents.forEach((element) =>
         element.addEventListener("click", handleActiveAgent)
       );
 
@@ -482,9 +537,15 @@
           element.classList.remove("currently-selected-agent")
         );
 
+        recommendedAgents.forEach((element) =>
+          element.classList.remove("currently-selected-agent")
+        );
+
         this.classList.add("currently-selected-agent");
 
-        const currentAgent = this.children[0].textContent.toLowerCase();
+        const currentAgent =
+          this.children[0].textContent.toLowerCase() ||
+          this.children[1].textContent.toLowerCase();
 
         const params = new URLSearchParams(window.location.search);
         params.set("agent", currentAgent);
@@ -568,6 +629,8 @@
               </div>`
         );
 
+        scrollToBottom();
+
         userMessage.value = "";
 
         const queryParam = getQueryParameters();
@@ -576,6 +639,10 @@
 
         const response = await postContentView(trimmedMessage);
 
+        if (!response) throw Error("No response found.");
+
+        addAgentMessage(queryParam, response);
+
         scrollToBottom();
       }
 
@@ -583,21 +650,26 @@
         try {
           const postData = new URLSearchParams();
 
-          postData.append("message", userMessage);
+          const test = getQueryParameters();
+
+          postData.append("message", test);
 
           const queryString = window.location.search;
 
-          const agentId = queryString
+          const agentName = queryString
             .slice(queryString.search(/agent/i))
             .split("=")[1];
 
-          const response = await fetch(`/generate-content/${agentId || ""}/`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: postData.toString(),
-          });
+          const response = await fetch(
+            `/generate-content/${agentName || "new_agent"}/`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: postData.toString(),
+            }
+          );
 
           if (!response.ok)
             throw Error(
@@ -613,9 +685,13 @@
 
           const queryParam = getQueryParameters();
 
-          if (queryParam) setLocalStorage(queryParam, data);
+          if (queryParam)
+            setLocalStorage(queryParam, {
+              agentName: queryParam,
+              message: data.response,
+            });
 
-          return data;
+          return data.response;
         } catch (error) {
           console.error(error);
 

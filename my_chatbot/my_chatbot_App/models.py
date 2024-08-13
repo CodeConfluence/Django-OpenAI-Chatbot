@@ -10,7 +10,7 @@ file_path = os.path.join(BASE_DIR, 'model_default_instructions.txt')
 
 try:
     with open(file_path, 'r') as file:
-        instructions = file.read()
+        default_instructions = file.read()
 except FileNotFoundError:
     print(f"Error: The file {file_path} was not found.")
     default_instructions = ""

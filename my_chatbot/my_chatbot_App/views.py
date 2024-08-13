@@ -177,8 +177,8 @@ import google.generativeai as genai
 genai.configure(api_key=config('API_KEY'))
 
 @csrf_exempt
-def generate_content_view(request, agent_id):
-    agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+def generate_content_view(request, agent_name):
+    agent = get_object_or_404(Agent, name=agent_name, creator=request.user)
 
     model=genai.GenerativeModel(
     model_name="gemini-1.5-flash",
@@ -191,8 +191,8 @@ def generate_content_view(request, agent_id):
             return JsonResponse({"error": "No message provided"}, status=400)
 
         chatbot_response = model.generate_content(user_message)
-
-        return JsonResponse({"response": chatbot_response})
+        
+        return JsonResponse({"response": chatbot_response.text})
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
