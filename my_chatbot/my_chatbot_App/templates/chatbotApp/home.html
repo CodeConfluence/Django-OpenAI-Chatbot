@@ -494,29 +494,11 @@
                 element.error ? true : false
               );
             } else {
-              chatbox.insertAdjacentHTML(
-                "beforeend",
-                `<div class="chatbot-user-output-wrapper">
-                <div class="chatbot-user-output-content">
-                  <div class="chatbot-user-message">
-                    <p class="chatbot-user-message-content">
-                      ${element}
-                    </p>
-                  </div>
-                </div>
-              </div>`
-              );
+              insertUserMessage(element);
             }
           });
 
-          chatbox.insertAdjacentHTML(
-            "beforeend",
-            `<div class="previous-messages-divider">
-            <div class="previous-messages-divisor"></div>
-            <p class="previous-messages-text">Previous Messages</p>
-            <div class="previous-messages-divisor"></div>
-          </div>`
-          );
+          insertChatDivider();
 
           scrollToBottom();
         } else {
@@ -607,6 +589,32 @@
         );
       }
 
+      function insertUserMessage(message) {
+        chatbox.insertAdjacentHTML(
+          "beforeend",
+          `<div class="chatbot-user-output-wrapper">
+                <div class="chatbot-user-output-content">
+                  <div class="chatbot-user-message">
+                    <p class="chatbot-user-message-content">
+                      ${message}
+                    </p>
+                  </div>
+                </div>
+              </div>`
+        );
+      }
+
+      function insertChatDivider() {
+        chatbox.insertAdjacentHTML(
+          "beforeend",
+          `<div class="previous-messages-divider">
+            <div class="previous-messages-divisor"></div>
+            <p class="previous-messages-text">Previous Messages</p>
+            <div class="previous-messages-divisor"></div>
+          </div>`
+        );
+      }
+
       async function addUserMessage() {
         const userMessage = document.getElementById(
           "chatbot-chatbox-user-input"
@@ -616,18 +624,7 @@
 
         if (!trimmedMessage) return;
 
-        chatbox.insertAdjacentHTML(
-          "beforeend",
-          `<div class="chatbot-user-output-wrapper">
-                <div class="chatbot-user-output-content">
-                  <div class="chatbot-user-message">
-                    <p class="chatbot-user-message-content">
-                      ${trimmedMessage}
-                    </p>
-                  </div>
-                </div>
-              </div>`
-        );
+        insertUserMessage(trimmedMessage);
 
         scrollToBottom();
 
@@ -650,18 +647,18 @@
         try {
           const postData = new URLSearchParams();
 
-          const test = getQueryParameters();
+          const agentName = getQueryParameters(); // for now until we fix case sensitivity
 
-          postData.append("message", test);
+          postData.append("message", userMessage);
 
-          const queryString = window.location.search;
+          // const queryString = window.location.search;
 
-          const agentName = queryString
-            .slice(queryString.search(/agent/i))
-            .split("=")[1];
+          // const agentName = queryString
+          //   .slice(queryString.search(/agent/i))
+          //   .split("=")[1];
 
           const response = await fetch(
-            `/generate-content/${agentName || "new_agent"}/`,
+            `/generate-content/${test || "new_agent"}/`,
             {
               method: "POST",
               headers: {
