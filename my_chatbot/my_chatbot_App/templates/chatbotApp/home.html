@@ -73,8 +73,7 @@
           height="75"
         />
 
-        <div class="aside-menu-searchbar">
-          <!-- search icon svg -->
+        <!-- <div class="aside-menu-searchbar">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -106,7 +105,7 @@
               y2="16.65"
             ></line>
           </svg>
-          <!---->
+
           <form>
             <input
               placeholder="Search Agents"
@@ -115,7 +114,7 @@
               class="aside-search-bar"
             />
           </form>
-        </div>
+        </div> -->
 
         <div class="aside-previous-agents-wrapper">
           <p class="aside-previous-agents-text">My Agents</p>
@@ -494,29 +493,11 @@
                 element.error ? true : false
               );
             } else {
-              chatbox.insertAdjacentHTML(
-                "beforeend",
-                `<div class="chatbot-user-output-wrapper">
-                <div class="chatbot-user-output-content">
-                  <div class="chatbot-user-message">
-                    <p class="chatbot-user-message-content">
-                      ${element}
-                    </p>
-                  </div>
-                </div>
-              </div>`
-              );
+              insertUserMessage(element);
             }
           });
 
-          chatbox.insertAdjacentHTML(
-            "beforeend",
-            `<div class="previous-messages-divider">
-            <div class="previous-messages-divisor"></div>
-            <p class="previous-messages-text">Previous Messages</p>
-            <div class="previous-messages-divisor"></div>
-          </div>`
-          );
+          insertChatDivider();
 
           scrollToBottom();
         } else {
@@ -576,7 +557,11 @@
         asideMenuWrapper.classList.add("chatbot-aside-menu-wrapper-inactive");
       }
 
-      function addAgentMessage(agentTitle, agentMessage, error = false) {
+      function addAgentMessage(
+        agentTitle = "new_agent",
+        agentMessage,
+        error = false
+      ) {
         chatbox.insertAdjacentHTML(
           "beforeend",
           `<div class="chatbot-chat-output-wrapper ">
@@ -593,7 +578,7 @@
                     <p class="chatbot-chat-social-brain">Social Brain</p>
                     <p class="chatbot-chat-agent-name ${
                       error ? "chatbot-chat-agent-name-error" : ""
-                    }">${agentTitle}</p>
+                    }">${formatString(ucFirst(agentTitle))}</p>
                   </div>
                   <div class="chatbot-chat-message ${
                     error ? "chatbot-chat-message-error" : ""
@@ -607,6 +592,32 @@
         );
       }
 
+      function insertUserMessage(message) {
+        chatbox.insertAdjacentHTML(
+          "beforeend",
+          `<div class="chatbot-user-output-wrapper">
+                <div class="chatbot-user-output-content">
+                  <div class="chatbot-user-message">
+                    <p class="chatbot-user-message-content">
+                      ${message}
+                    </p>
+                  </div>
+                </div>
+              </div>`
+        );
+      }
+
+      function insertChatDivider() {
+        chatbox.insertAdjacentHTML(
+          "beforeend",
+          `<div class="previous-messages-divider">
+            <div class="previous-messages-divisor"></div>
+            <p class="previous-messages-text">Previous Messages</p>
+            <div class="previous-messages-divisor"></div>
+          </div>`
+        );
+      }
+
       async function addUserMessage() {
         const userMessage = document.getElementById(
           "chatbot-chatbox-user-input"
@@ -616,18 +627,7 @@
 
         if (!trimmedMessage) return;
 
-        chatbox.insertAdjacentHTML(
-          "beforeend",
-          `<div class="chatbot-user-output-wrapper">
-                <div class="chatbot-user-output-content">
-                  <div class="chatbot-user-message">
-                    <p class="chatbot-user-message-content">
-                      ${trimmedMessage}
-                    </p>
-                  </div>
-                </div>
-              </div>`
-        );
+        insertUserMessage(trimmedMessage);
 
         scrollToBottom();
 
@@ -641,7 +641,7 @@
 
         if (!response) throw Error("No response found.");
 
-        addAgentMessage(queryParam, response);
+        addAgentMessage(queryParam || "new_agent", response);
 
         scrollToBottom();
       }
@@ -650,15 +650,9 @@
         try {
           const postData = new URLSearchParams();
 
-          const test = getQueryParameters();
+          const agentName = getQueryParameters();
 
-          postData.append("message", test);
-
-          const queryString = window.location.search;
-
-          const agentName = queryString
-            .slice(queryString.search(/agent/i))
-            .split("=")[1];
+          postData.append("message", userMessage);
 
           const response = await fetch(
             `/generate-content/${agentName || "new_agent"}/`,
@@ -693,14 +687,14 @@
 
           return data.response;
         } catch (error) {
-          console.error(error);
-
           const errorTitle = "A Error Has Occurred";
 
           const errorMessage =
             "An Error has occurred, please try to generate a response again!";
 
           addAgentMessage(errorTitle, errorMessage, true);
+
+          scrollToBottom();
 
           const queryParam = getQueryParameters();
 
@@ -715,6 +709,20 @@
               true
             );
         }
+      }
+
+      function ucFirst(str) {
+        const splitString = str.toLowerCase().split(" ");
+
+        const formattedString = splitString.map(
+          (word) => `${word[0].toUpperCase()}${word.slice(1)}`
+        );
+
+        return formattedString.join(" ");
+      }
+
+      function formatString(str) {
+        return str.trim().split("-").join(" ").split("_").join(" ");
       }
 
       function setLocalStorage(key, value, agent = false) {

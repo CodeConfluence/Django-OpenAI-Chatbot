@@ -178,7 +178,7 @@ genai.configure(api_key=config('API_KEY'))
 
 @csrf_exempt
 def generate_content_view(request, agent_name):
-    agent = get_object_or_404(Agent, name=agent_name, creator=request.user)
+    agent = get_object_or_404(Agent, name__iexact=agent_name, creator=request.user)
 
     model=genai.GenerativeModel(
     model_name="gemini-1.5-flash",
