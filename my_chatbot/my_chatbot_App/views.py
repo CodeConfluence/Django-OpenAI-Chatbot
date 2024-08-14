@@ -183,14 +183,27 @@ def generate_content_view(request, agent_name):
     model=genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     system_instruction=agent.instructions)
+
+    directory_path = f"media/uploads/agents/{agent.id}/"
     
+    files = os.listdir(directory_path)
+    
+    if not files:
+        return JsonResponse({"error": "No files found in the directory"}, status=400)
+    
+    file_path = os.path.join(directory_path, files[0])
+    
+    knowledge_base_file = genai.upload_file(path=file_path, display_name=f"Agent '{agent.name}' Knowledge Base PDF") 
+
     if request.method == "POST":
         user_message = request.POST.get('message')
 
         if not user_message:
             return JsonResponse({"error": "No message provided"}, status=400)
 
-        chatbot_response = model.generate_content(user_message)
+        modified_user_message = f"Using this knowledge base in the file, respond to the user message: {user_message}"
+
+        chatbot_response = model.generate_content([knowledge_base_file, modified_user_message])
         
         return JsonResponse({"response": chatbot_response.text})
 
@@ -218,48 +231,82 @@ def agent_selection_view(request): # where the user selects which agent they're 
 @login_required
 def create_agent_view(request):
     if request.method == 'POST':
+
+        agent_name = request.POST.get('name')
+        user_agent_name = Agent.objects.filter(name=agent_name)
+        if user_agent_name:
+            error_message = f"Agent with name '{agent_name}' already exists!"
+            context = {'error':error_message}
+            return render(request, 'chatbotApp/create.html', context) 
+
         agent_form = AgentForm(request.POST)
         if agent_form.is_valid():
             agent = agent_form.save(commit=False)
             agent.creator = request.user
+            agent.user_defined_instructions = agent_form.cleaned_data.get('instructions')
             agent.save()
             
             # Handling file upload for resources
-            files = request.FILES.getlist('files')
-            for file in files:
-                # Extract the original file name and extension (learning reference)
-                original_name, extension = os.path.splitext(file.name)
-                # Create a new file name with the agent's name appended
-                new_name = f"{original_name}_{slugify(agent.name)}{extension}"
-                # Save the file with the new name
-                Resource.objects.create(agent=agent, title=new_name, file=file)
+            resource_form = ResourceForm(request.POST, request.FILES)
+            if resource_form.is_valid():
+                resource = resource_form.save(commit=False)
+                resource.agent = agent
+                if 'file' in request.FILES:
+                    uploaded_file = request.FILES['file']
+                    original_name, extension = os.path.splitext(uploaded_file.name)
+                    new_name = f"{original_name}_{slugify(agent.name)}{extension}"
+                    
+                    resource.save()
+                    # Save the file with the new name
+                    resource.file.save(new_name, uploaded_file)
+                    resource.title = new_name
+                resource.save()
 
             return redirect(reverse_lazy('profile'))
-
+        
     return render(request, 'chatbotApp/create.html')
 
 @login_required
 def update_agent_view(request, agent_id):
     agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+    resource, created = Resource.objects.get_or_create(agent=agent)
     if request.method == 'POST':
+
+        agent_name = request.POST.get('name')
+        user_agent_name = Agent.objects.filter(name=agent_name)
+        if user_agent_name:
+            error_message = f"Agent with name '{agent_name}' already exists!"
+            context = {
+                'error':error_message,
+                'agent': agent,
+                'resource':resource,
+                }
+            return render(request, 'chatbotApp/edit.html', context)
+        
         agent_form = AgentForm(request.POST, instance=agent)
         if agent_form.is_valid():
-            # Save the updated agent
-            agent_form.save()
+            agent = agent_form.save(commit=False)
+            agent.user_defined_instructions = agent_form.cleaned_data.get('instructions')
+            agent.save()
             
-            files = request.FILES.getlist('files')
-            for file in files:
-                # Extract the original file name and extension (learning reference)
-                original_name, extension = os.path.splitext(file.name)
-                # Create a new file name with the agent's name appended
-                new_name = f"{original_name}_{slugify(agent.name)}{extension}"
-                # Save the file with the new name
-                Resource.objects.update(title=new_name, file=file)
+            resource_form = ResourceForm(request.POST, request.FILES, instance=resource)
+            if resource_form.is_valid():
+                resource = resource_form.save(commit=False)
+                if 'file' in request.FILES:
+                    uploaded_file = request.FILES['file']
+                    original_name, extension = os.path.splitext(uploaded_file.name)
+                    new_name = f"{original_name}_{slugify(agent.name)}{extension}"
+                    
+                    resource.file.save(new_name, uploaded_file)
+                    resource.title = new_name
+                resource.agent = agent
+                resource.save()
             
             return redirect(reverse_lazy('profile'))
         
     context = {
         'agent': agent,
+        'resource':resource,
     }
 
     return render(request, 'chatbotApp/edit.html', context)
@@ -271,9 +318,3 @@ def delete_agent_view(request, agent_id):
        agent.delete()
        return redirect('profile')
    return render(request, 'chatbotApp/agent_delete_confirmation.html', {'agent': agent}) # go back to the delete agent page
-
-# @login_required
-# def chat_interface_view(request, agent_id):
-#   agent = get_object_or_404(Agent, id=agent_id)
-   #return render(request, 'chatbotApp/chat_interface.html', {'agent': agent})
-#need to work on this

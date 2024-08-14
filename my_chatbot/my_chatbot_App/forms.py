@@ -7,8 +7,6 @@ class AgentForm(forms.ModelForm):
         fields = ['name', 'description', 'instructions', 'is_public']
 
 class ResourceForm(forms.ModelForm):
-    files = forms.FileField(widget=forms.ClearableFileInput(), required=False)
-
     class Meta:
         model = Resource
-        fields = ['files']
+        fields = ['file']

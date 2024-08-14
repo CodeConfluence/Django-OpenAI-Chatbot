@@ -11,6 +11,9 @@
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" placeholder="Name your agent" value="{{ agent.name }}" required>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
         </div>
         <div class="form-group">
             <label for="description">Description</label>
@@ -18,12 +21,12 @@
         </div>
         <div class="form-group">
             <label for="instructions">Instructions</label>
-            <textarea id="instructions" name="instructions" placeholder="What is the purpose of the agent in this interaction? How should it respond to user messages? Are there specific topics the agent should focus on or avoid?" required>{{ agent.instructions }}</textarea>
+            <textarea id="instructions" name="instructions" placeholder="What is the purpose of the agent in this interaction? How should it respond to user messages? Are there specific topics the agent should focus on or avoid?">{{ agent.user_defined_instructions }}</textarea>
         </div>
         <div class="form-group">
             <label for="knowledge">Knowledge</label>
             <p class="visibility-description">Provides a collection of resources, documents, and information that agents can access to enhance their responses and better assist users in various queries.</p>
-            <input type="file" id="files" name="file" value="{{ resource.file }}" multiple>
+            <input type="file" id="file" name="file" value="{{ resource.file }}" required>
         </div>
         <div class="form-group visibility-section">
             <label>Visibility</label>
