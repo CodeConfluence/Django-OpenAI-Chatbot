@@ -19,12 +19,9 @@ Welcome to the SocialBrain.ai Chatbot Platform repository! 🚀 This project all
 - **SQLite/PostgreSQL:** 🛢️ Database for managing users, agents, and their resources.
 
 ## 🚀 Quick Start
-**Clone the repository**
+**Clone the repository and navigate to the project folder**
 ```
 git clone https://github.com/yourusername/Django-OpenAI-Chatbot.git
-```
-**Navigate to the project folder**
-```
 cd my_chatbot
 ```
 **Install Python**
@@ -90,15 +87,6 @@ python manage.py runserver
 - Upload knowledge base files in PDF format to enhance your chatbot’s responses.
 - Configure chatbot instructions for guiding how the chatbot interacts with users.
 - Generate intelligent responses by interacting with your chatbots in real-time.
-
-## 📸 Screenshots
-<p align="center">
-  <img width="49.7%" alt="HomeScreen" src="https://github.com/zhangbri/Pantry-Tracker/blob/main/PantryMate.png">
-  <img width="49.7%" alt="Pantry List" src="https://github.com/zhangbri/Pantry-Tracker/blob/main/PantryList.png">
-</p>
-<p align="center">
-  <img width="50%" alt="Image Capture" src="https://github.com/zhangbri/Pantry-Tracker/blob/main/ImageCapture.png">
-</p>
 
 ## 📬 Contact
 Have any questions or suggestions? Feel free to reach out via email at [zhangbri@umich.edu](mailto:zhangbri@umich.edu) and [snrkis@umich.edu](mailto:snrkis@umich.edu) or connect with us on [LinkedIn](https://www.linkedin.com/in/zhangbri/), [LinkedIn](https://www.linkedin.com/in/kristan-seenath-nagassar-922720290?), and [LinkedIn](https://www.linkedin.com/in/jesus-garcia-b57261310/). I'm open to discussions, collaborations, and feedback.
