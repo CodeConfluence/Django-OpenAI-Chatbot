@@ -25,7 +25,7 @@ git clone https://github.com/yourusername/Django-OpenAI-Chatbot.git
 ```
 **Navigate to the project folder**
 ```
-cd flashcard_project
+
 ```
 **Generate the `requirements.txt` File**
 ```
