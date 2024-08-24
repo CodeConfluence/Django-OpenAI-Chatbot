@@ -1,40 +1,45 @@
-# 🛒 PantryMate ⚖️
+# 🤖 SocialBrain 💬
 
 ## 🌟 Introduction
-Welcome to the Pantry Tracker project repository! 🚀 This repository contains the codebase for an AI-powered platform designed to help users efficiently manage their pantry. With real-time inventory tracking, the site simplifies kitchen organization, offering a user-friendly and intuitive experience. Whether you're managing your personal kitchen or a larger inventory, this platform ensures you stay organized and never run out of essentials.
+Welcome to the SocialBrain.ai Chatbot Platform repository! 🚀 This project allows users to create custom AI-powered chatbots that interact with users based on pre-defined instructions and knowledge bases. The platform offers a seamless and intuitive interface for managing chatbots, enabling both personal and public usage scenarios.
 
 ## 💡 Project Features
-- **Real-Time Inventory Management:** 📊 Automatically tracks and updates your pantry inventory, helping you stay organized.
-- **User Authentication:** 🔑 Secure login functionality to manage personal pantry items privately.
-- **Intuitive Interface:** 🧭 A clean, easy-to-navigate dashboard for adding, editing, and removing pantry items.
-- **Interactive Elements:** 💥 Dynamic UI elements for a seamless user experience.
-- **AI-Powered Image Capture:** 📸 Easily capture images of pantry items and let AI classification automatically add them to your inventory list.
-
-## 🛠️ Technologies 
-- **HTML:** 📝 Provides structure to the website's clean and interactive pages.
-- **CSS:** 🎨 Styles the platform for a sleek, modern design, including responsive features.
-- **JavaScript:** ⚙️ Powers the interactive features and real-time inventory updates.
-- **Next.js:** ⚡ Ensures fast server-side rendering for optimized performance.
-- **Firebase:** 🔥 Manages user authentication and database storage for secure and efficient data handling.
+- **Custom AI Agents:** 🧠 Create and configure AI chatbots with user-defined instructions and knowledge base files.
+- **User Authentication:** 🔑 Secure login functionality for creating and managing personal agents.
+- **File Upload for Resources:** 📂 Upload custom files to train agents with specific knowledge.
+- **Interactive Chat Interface:** 💬 Engage with chatbots in a dynamic user interface.
+- **Agent Selection:** 🕹️ Choose between personal and public agents for different use cases.
+- **AI Content Generation:** ⚙️ Use Google Vertex AI for generating intelligent responses based on knowledge base files.
+  
+## 🛠️ Technologies
+- **Django:** 🖥️ Backend framework powering the platform’s core functionality and authentication system.
+- **Google Vertex AI:** 🤖 Leverages Google’s AI capabilities to enable intelligent content generation for agents.
+- **HTML/CSS/JavaScript:** 🌐 Frontend stack for building interactive pages and chat interfaces.
+- **Bootstrap:** 🎨 Provides responsive and sleek design components.
+- **SQLite/PostgreSQL:** 🛢️ Database for managing users, agents, and their resources.
 
 ## 🚀 Quick Start
 **Clone the repository**
 ```
-git clone https://github.com/yourusername/socialbrain-chatbot.git
+git clone https://github.com/yourusername/Django-OpenAI-Chatbot.git
 ```
 **Navigate to the project folder**
 ```
-npm install
+cd flashcard_project
+```
+**Generate the `requirements.txt` File**
+```
+pip freeze > requirements.txt
 ```
 **Install dependencies**
 ```
-npm install
+pip install -r requirements.txt
 ```
 **Start the development server**
 ```
-npm run dev
+python manage.py runserver
 ```
-**Open** http://localhost:3000 **in your web browser to view the app.**
+**Open** http://localhost:8000 in your web browser to view the platform.**
 
 ## 📁 Directory Structure
 - `views.py` - Contains all views for managing agents, user authentication, and chatbot interactions.
@@ -42,6 +47,12 @@ npm run dev
 - `forms.py` - Handles the forms for creating and updating agents and uploading resources.
 - `templates/` - Contains all HTML templates for rendering the frontend pages.
 - `static/` - Holds the static files, including CSS, JavaScript, and images for the platform.
+
+## 📝 Usage
+- Create an account to start managing your custom AI agents.
+- Upload knowledge base files in PDF format to enhance your chatbot’s responses.
+- Configure chatbot instructions for guiding how the chatbot interacts with users.
+- Generate intelligent responses by interacting with your chatbots in real-time.
 
 ## 📸 Screenshots
 <p align="center">
