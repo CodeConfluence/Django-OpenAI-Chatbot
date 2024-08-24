@@ -20,7 +20,7 @@ Welcome to the Pantry Tracker project repository! 🚀 This repository contains 
 ## 🚀 Quick Start
 **Clone the repository**
 ```
-git clone https://github.com/zhangbri/Pantry-Tracker.git
+git clone https://github.com/yourusername/socialbrain-chatbot.git
 ```
 **Navigate to the project folder**
 ```
@@ -36,14 +36,12 @@ npm run dev
 ```
 **Open** http://localhost:3000 **in your web browser to view the app.**
 
-## Live Demo 🔗
-My Website: https://pantrymate.vercel.app/
-
 ## 📁 Directory Structure
-- `ImageCapture.js` - React component for capturing images using the device's - camera.
-- `globals.css` - Global styles for the website, including custom fonts and responsive design.
-- `layout.js` - Defines the page layout and includes meta tags for SEO and Google Analytics.
-- `page.js` - Main page for displaying and managing the pantry inventory, with interactive elements.
+- `views.py` - Contains all views for managing agents, user authentication, and chatbot interactions.
+- `models.py` - Defines the database models for agents, resources, and user profiles.
+- `forms.py` - Handles the forms for creating and updating agents and uploading resources.
+- `templates/` - Contains all HTML templates for rendering the frontend pages.
+- `static/` - Holds the static files, including CSS, JavaScript, and images for the platform.
 
 ## 📸 Screenshots
 <p align="center">
