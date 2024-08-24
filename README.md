@@ -25,7 +25,32 @@ git clone https://github.com/yourusername/Django-OpenAI-Chatbot.git
 ```
 **Navigate to the project folder**
 ```
-
+cd my_chatbot
+```
+**Install Python**
+```
+brew install python
+```
+**Install pip**
+```
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3 get-pip.py
+```
+**Create a Virtual Environment**
+```
+python3 -m venv venv
+```
+**Activate Virtual Environment**
+```
+source venv/bin/activate
+```
+**Install Django**
+```
+pip install django
+```
+**Install `python-decouple`**
+```
+pip install python-decouple
 ```
 **Generate the `requirements.txt` File**
 ```
