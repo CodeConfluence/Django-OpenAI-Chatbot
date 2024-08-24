@@ -21,7 +21,7 @@ Welcome to the SocialBrain.ai Chatbot Platform repository! 🚀 This project all
 ## 🚀 Quick Start
 **Clone the repository and navigate to the project folder**
 ```
-git clone https://github.com/yourusername/Django-OpenAI-Chatbot.git
+git clone https://github.com/zhangbri/Django-OpenAI-Chatbot.git
 cd my_chatbot
 ```
 **Install Python and pip**
