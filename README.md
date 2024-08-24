@@ -52,6 +52,14 @@ pip install django
 ```
 pip install python-decouple
 ```
+**Install `google-generativeai` Library**
+```
+pip install google-generativeai
+```
+**Install Pillow**
+```
+pip install Pillow
+```
 **Generate the `requirements.txt` File**
 ```
 pip freeze > requirements.txt
@@ -59,6 +67,10 @@ pip freeze > requirements.txt
 **Install dependencies**
 ```
 pip install -r requirements.txt
+```
+**Run migrations**
+```
+python manage.py migrate
 ```
 **Start the development server**
 ```
