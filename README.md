@@ -24,53 +24,35 @@ Welcome to the SocialBrain.ai Chatbot Platform repository! 🚀 This project all
 git clone https://github.com/yourusername/Django-OpenAI-Chatbot.git
 cd my_chatbot
 ```
-**Install Python**
+**Install Python and pip**
 ```
 brew install python
-```
-**Install pip**
-```
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py
 ```
-**Create a Virtual Environment**
+**Set up a Virtual Environment and activate it**
 ```
 python3 -m venv venv
-```
-**Activate Virtual Environment**
-```
 source venv/bin/activate
 ```
-**Install Django**
+**Create a .env file in the root directory and add the following environment variables**
 ```
-pip install django
+SENDGRID_API_KEY=your_sendgrid_api_key
+DEFAULT_FROM_EMAIL=your_default_email@example.com
+GOOGLE_API_KEY=your_google_api_key
 ```
-**Install `python-decouple`**
-```
-pip install python-decouple
-```
-**Install `google-generativeai` Library**
-```
-pip install google-generativeai
-```
-**Install Pillow**
-```
-pip install Pillow
-```
-**Generate the `requirements.txt` File**
+**Generate the `requirements.txt` file and Install dependencies**
 ```
 pip freeze > requirements.txt
-```
-**Install dependencies**
-```
 pip install -r requirements.txt
 ```
-**Run migrations**
+**Install main libraries if `requirements.txt` file is not provided**
+```
+pip install django python-decouple google-generativeai Pillow
+```
+**Run database migrations and start the development server**
 ```
 python manage.py migrate
-```
-**Start the development server**
-```
 python manage.py runserver
 ```
 **Open** http://localhost:8000 in your web browser to view the platform.**
