@@ -1,7 +1,7 @@
 # 🤖 SocialBrain 💬
 
 ## 🌟 Introduction
-Welcome to the SocialBrain Chatbot repository! 🚀 This project allows users to create custom AI-powered chatbots that interact with users based on pre-defined instructions and knowledge bases. The platform offers a seamless and intuitive interface for managing chatbots, enabling both personal and public usage.
+Welcome to the SocialBrain Chatbot repository! This project allows users to create custom AI-powered chatbots that interact with users based on pre-defined instructions and knowledge bases. The platform offers a seamless and intuitive interface for managing chatbots, enabling both personal and public usage.
 
 ## 💡 Features
 - **Custom AI Agents:** 🧠 Create and configure AI chatbots with user-defined instructions and knowledge base files.
