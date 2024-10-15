@@ -71,4 +71,4 @@ python manage.py runserver
 - Generate intelligent responses by interacting with your chatbots in real-time.
 
 ## 📬 Contact
-For inquiries or feedback, please reach out via email at [zhangbri@umich.edu](mailto:zhangbri@umich.edu) and [snrkis@umich.edu](mailto:snrkis@umich.edu) or connect with us on [LinkedIn](https://www.linkedin.com/in/zhangbri/), [LinkedIn](https://www.linkedin.com/in/kristan-seenath-nagassar-922720290?), and [LinkedIn](https://www.linkedin.com/in/jesus-garcia-b57261310/).
+For inquiries or feedback, please reach out via email at [zhangbri@umich.edu](mailto:zhangbri@umich.edu) and [snrkis@umich.edu](mailto:snrkis@umich.edu) or connect with us on [Brian Zhang](https://www.linkedin.com/in/zhangbri/), [Kristan Nagassar](https://www.linkedin.com/in/kristan-seenath-nagassar-922720290?), and [Jesus Garcia](https://www.linkedin.com/in/jesus-garcia-b57261310/).
