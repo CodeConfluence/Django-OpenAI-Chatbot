@@ -4,19 +4,19 @@
 Welcome to the SocialBrain Chatbot repository! This project allows users to create custom AI-powered chatbots that interact with users based on pre-defined instructions and knowledge bases. The platform offers a seamless and intuitive interface for managing chatbots, enabling both personal and public usage.
 
 ## 💡 Features
-- **Custom AI Agents:** 🧠 Create and configure AI chatbots with user-defined instructions and knowledge base files.
-- **User Authentication:** 🔑 Secure login functionality for creating and managing personal agents.
-- **File Upload for Resources:** 📂 Upload custom files to train agents with specific knowledge.
-- **Interactive Chat Interface:** 💬 Engage with chatbots in a dynamic user interface.
-- **Agent Selection:** 🕹️ Choose between personal and public agents for different use cases.
-- **AI Content Generation:** ⚙️ Use Google Vertex AI for generating intelligent responses based on knowledge base files.
+- **Custom AI Agents:** Create and configure AI chatbots with user-defined instructions and knowledge base files.
+- **User Authentication:** Secure login functionality for creating and managing personal agents.
+- **File Upload for Resources:** Upload custom files to train agents with specific knowledge.
+- **Interactive Chat Interface:** Engage with chatbots in a dynamic user interface.
+- **Agent Selection:** Choose between personal and public agents for different use cases.
+- **AI Content Generation:** Use Google Vertex AI for generating intelligent responses based on knowledge base files.
   
 ## 💻 Technologies
-- **Django:** 🖥️ Backend framework powering the platform’s core functionality and authentication system.
-- **Google Vertex AI:** 🤖 Leverages Google’s AI capabilities to enable intelligent content generation for agents.
-- **HTML/CSS/JavaScript:** 🌐 Frontend stack for building interactive pages and chat interfaces.
-- **Bootstrap:** 🎨 Provides responsive and sleek design components.
-- **SQLite/PostgreSQL:** 🛢️ Database for managing users, agents, and their resources.
+- **Django:** Backend framework powering the platform’s core functionality and authentication system.
+- **Google Vertex AI:** Leverages Google’s AI capabilities to enable intelligent content generation for agents.
+- **HTML/CSS/JavaScript:** Frontend stack for building interactive pages and chat interfaces.
+- **Bootstrap:** Provides responsive and sleek design components.
+- **SQLite/PostgreSQL:** Database for managing users, agents, and their resources.
 
 ## 🛠️ Installation and Setup
 **Clone the repository and navigate to the project folder**
