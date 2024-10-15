@@ -3,7 +3,7 @@
 ## 🌟 Introduction
 Welcome to the SocialBrain Chatbot repository! 🚀 This project allows users to create custom AI-powered chatbots that interact with users based on pre-defined instructions and knowledge bases. The platform offers a seamless and intuitive interface for managing chatbots, enabling both personal and public usage.
 
-## 💡 Project Features
+## 💡 Features
 - **Custom AI Agents:** 🧠 Create and configure AI chatbots with user-defined instructions and knowledge base files.
 - **User Authentication:** 🔑 Secure login functionality for creating and managing personal agents.
 - **File Upload for Resources:** 📂 Upload custom files to train agents with specific knowledge.
@@ -11,14 +11,14 @@ Welcome to the SocialBrain Chatbot repository! 🚀 This project allows users to
 - **Agent Selection:** 🕹️ Choose between personal and public agents for different use cases.
 - **AI Content Generation:** ⚙️ Use Google Vertex AI for generating intelligent responses based on knowledge base files.
   
-## 🛠️ Technologies
+## 💻 Technologies
 - **Django:** 🖥️ Backend framework powering the platform’s core functionality and authentication system.
 - **Google Vertex AI:** 🤖 Leverages Google’s AI capabilities to enable intelligent content generation for agents.
 - **HTML/CSS/JavaScript:** 🌐 Frontend stack for building interactive pages and chat interfaces.
 - **Bootstrap:** 🎨 Provides responsive and sleek design components.
 - **SQLite/PostgreSQL:** 🛢️ Database for managing users, agents, and their resources.
 
-## 🚀 Quick Start
+## 🛠️ Installation and Setup
 **Clone the repository and navigate to the project folder**
 ```
 git clone https://github.com/zhangbri/Django-OpenAI-Chatbot.git
@@ -71,4 +71,4 @@ python manage.py runserver
 - Generate intelligent responses by interacting with your chatbots in real-time.
 
 ## 📬 Contact
-For inquiries or feedback, please reach out via email at [zhangbri@umich.edu](mailto:zhangbri@umich.edu) or connect with me on [LinkedIn](https://www.linkedin.com/in/zhangbri/).
+For inquiries or feedback, please reach out via email at [zhangbri@umich.edu](mailto:zhangbri@umich.edu) and [snrkis@umich.edu](mailto:snrkis@umich.edu) or connect with us on [LinkedIn](https://www.linkedin.com/in/zhangbri/), [LinkedIn](https://www.linkedin.com/in/kristan-seenath-nagassar-922720290?), and [LinkedIn](https://www.linkedin.com/in/jesus-garcia-b57261310/).
