@@ -4,6 +4,9 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(BASE_DIR, 'model_default_instructions.txt')
@@ -12,7 +15,7 @@ try:
     with open(file_path, 'r') as file:
         default_instructions = file.read()
 except FileNotFoundError:
-    print(f"Error: The file {file_path} was not found.")
+    logger.warning(f"Default instructions file not found: {file_path}")
     default_instructions = ""
 
 def upload_resource_path(instance, filename):
@@ -21,6 +24,7 @@ def upload_resource_path(instance, filename):
 class Agent(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='agents')
     name = models.CharField(max_length=255)
+    cache_id = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     instructions = models.TextField(
         blank=True, 
@@ -59,6 +63,23 @@ class Resource(models.Model):
     def __str__(self):
         return self.title
 
+class ChatHistory(models.Model):
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='history')
+    title = models.CharField(max_length=255)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class Message(models.Model):
+    history = models.ForeignKey(ChatHistory, on_delete=models.CASCADE, related_name='messages')
+    user_message = models.TextField(blank=True)
+    bot_message = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Message {self.id} in {self.history.title}"
     
 class Interaction(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='interactions')
