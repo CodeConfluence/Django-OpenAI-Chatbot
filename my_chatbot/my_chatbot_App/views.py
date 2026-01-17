@@ -212,9 +212,8 @@ def create_agent_view(request):
                     original_name, extension = os.path.splitext(uploaded_file.name)
                     new_name = f"{original_name}_{slugify(agent.name)}{extension}"
                     
-                    resource.save()
-                    # Save the file with the new name
-                    resource.file.save(new_name, uploaded_file)
+                    # Save the file first, then save the resource
+                    resource.file.save(new_name, uploaded_file, save=False)
                     resource.title = new_name
                 resource.save()
 
@@ -253,7 +252,7 @@ def update_agent_view(request, agent_id):
                     original_name, extension = os.path.splitext(uploaded_file.name)
                     new_name = f"{original_name}_{slugify(agent.name)}{extension}"
                     
-                    resource.file.save(new_name, uploaded_file)
+                    resource.file.save(new_name, uploaded_file, save=False)
                     resource.title = new_name
                 resource.agent = agent
                 resource.save()

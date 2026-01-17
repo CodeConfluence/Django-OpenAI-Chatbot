@@ -63,7 +63,7 @@ def generate_content_view(request, agent_name):
                 knowledge_base_file_part = Part.from_data(data=pdf_data, mime_type="application/pdf")
 
                 cached_content = caching.CachedContent.create(
-                    model_name="gemini-1.5-pro-001",
+                    model_name="gemini-2.5-pro",
                     system_instruction=agent.instructions,
                     contents=[knowledge_base_file_part],
                     ttl=datetime.timedelta(hours=6),
