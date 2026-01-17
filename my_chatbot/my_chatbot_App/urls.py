@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+from .views_genai import generate_content_view
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -21,14 +22,13 @@ urlpatterns = [
     path('profile/upload-image/', views.profile_image_upload, name='profile_image_upload'),
     path('profile/update/confirmation', views.account_update_confirmation_view, name='account_update_confirmation'),
     path('profile/account_delete', views.account_delete_view, name='account_delete'),
-    path('agents/', views.agent_list_view, name='agent_list'), # list of agents
-    path('agents/create/', views.create_agent_view, name='create_agent'), # create a new agent
-    path('agents/<int:agent_id>/', views.agent_detail_view, name='agent_detail'), # view agent details
-    path('agents/<int:agent_id>/edit/', views.update_agent_view, name='edit_agent'), # update agent details
-    path('agents/<int:agent_id>/delete/', views.delete_agent_view, name='delete_agent'), # delete agent
-    path('agents/selection/', views.agent_selection_view, name='agent_selection'), # where the user whichever agent they're going to use
-    path('generate-content/<str:agent_name>/', views.generate_content_view, name='generate_content'),
-    # path('agents/<int:agent_id>/chat/', views.chat_interface_view, name='agent_chat'), still need to work on this
+    path('agents/', views.agent_list_view, name='agent_list'),
+    path('agents/create/', views.create_agent_view, name='create_agent'),
+    path('agents/<int:agent_id>/', views.agent_detail_view, name='agent_detail'),
+    path('agents/<int:agent_id>/edit/', views.update_agent_view, name='edit_agent'),
+    path('agents/<int:agent_id>/delete/', views.delete_agent_view, name='delete_agent'),
+    path('agents/selection/', views.agent_selection_view, name='agent_selection'),
+    path('generate-content/<str:agent_name>/', generate_content_view, name='generate_content'),
 ]
 
 if settings.DEBUG:

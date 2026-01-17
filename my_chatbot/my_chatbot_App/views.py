@@ -67,7 +67,6 @@ class CustomLoginView(LoginView):
 class CustomLogoutView(LoginRequiredMixin, LogoutView):
     def post(self, request):
         logout(request)
-        print("User logged out successfully") 
         return redirect('home')
 
 
@@ -166,67 +165,24 @@ def account_delete_view(request):
         return redirect('home')
     return render(request, 'accounts/account_delete_confirmation.html')
 
-# GOOGLE VERTEX AI (SHOULD PROBABLY CREATE A SEPERATE VIEW FILE)
-
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from decouple import config
-import google.generativeai as genai
-
-genai.configure(api_key=config('API_KEY'))
-
-@csrf_exempt
-def generate_content_view(request, agent_name):
-    agent = get_object_or_404(Agent, name__iexact=agent_name, creator=request.user)
-
-    model=genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
-    system_instruction=agent.instructions)
-
-    directory_path = f"media/uploads/agents/{agent.id}/"
-    
-    files = os.listdir(directory_path)
-    
-    if not files:
-        return JsonResponse({"error": "No files found in the directory"}, status=400)
-    
-    file_path = os.path.join(directory_path, files[0])
-    
-    knowledge_base_file = genai.upload_file(path=file_path, display_name=f"Agent '{agent.name}' Knowledge Base PDF") 
-
-    if request.method == "POST":
-        user_message = request.POST.get('message')
-
-        if not user_message:
-            return JsonResponse({"error": "No message provided"}, status=400)
-
-        modified_user_message = f"Using this knowledge base in the file, respond to the user message: {user_message}"
-
-        chatbot_response = model.generate_content([knowledge_base_file, modified_user_message])
-        
-        return JsonResponse({"response": chatbot_response.text})
-
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
+@login_required
+def agent_list_view(request):
+    agents = Agent.objects.filter(creator=request.user)
+    return render(request, 'agents/agent_list.html', {'agents': agents})
 
 @login_required
-def agent_list_view(request): # getting list of agents
-   agents = Agent.objects.filter(creator=request.user)
-   return render(request, 'agents/agent_list.html', {'agents': agents}) # render agent list
+def agent_detail_view(request, agent_id):
+    agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+    return render(request, 'agents/agent_detail.html', {'agent': agent})
 
 @login_required
-def agent_detail_view(request, agent_id): # for viewing agent details
-   agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
-   return render(request, 'agents/agent_detail.html', {'agent': agent}) # render agent details
-
-@login_required
-def agent_selection_view(request): # where the user selects which agent they're going to use
-   user_agents = Agent.objects.filter(creator=request.user)
-   public_agents = Agent.objects.filter(is_public=True).exclude(creator=request.user)
-   return render(request, 'agents/agent_selection.html', { # go to the agent select page
-       'user_agents': user_agents,
-       'public_agents': public_agents,
-   })
+def agent_selection_view(request):
+    user_agents = Agent.objects.filter(creator=request.user)
+    public_agents = Agent.objects.filter(is_public=True).exclude(creator=request.user)
+    return render(request, 'agents/agent_selection.html', {
+        'user_agents': user_agents,
+        'public_agents': public_agents,
+    })
 
 @login_required
 def create_agent_view(request):
@@ -273,8 +229,8 @@ def update_agent_view(request, agent_id):
     if request.method == 'POST':
 
         agent_name = request.POST.get('name')
-        user_agent_name = Agent.objects.filter(name=agent_name)
-        if user_agent_name:
+        agent_list = Agent.objects.filter(name=agent_name).exclude(id=agent.id)
+        if agent_list:
             error_message = f"Agent with name '{agent_name}' already exists!"
             context = {
                 'error':error_message,
@@ -313,8 +269,8 @@ def update_agent_view(request, agent_id):
 
 @login_required
 def delete_agent_view(request, agent_id):
-   agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
-   if request.method == 'POST': # will delete agent
-       agent.delete()
-       return redirect('profile')
-   return render(request, 'chatbotApp/agent_delete_confirmation.html', {'agent': agent}) # go back to the delete agent page
+    agent = get_object_or_404(Agent, id=agent_id, creator=request.user)
+    if request.method == 'POST':
+        agent.delete()
+        return redirect('profile')
+    return render(request, 'chatbotApp/agent_delete_confirmation.html', {'agent': agent})
